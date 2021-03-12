@@ -1,9 +1,9 @@
 const express = require('express')
+const AvaliationController = require('./controllers/AvaliationController')
 
 const routes = express.Router()
 
-routes.get('/', (req, res) => {
-  return res.json({ hello: 'Hello World '})
-})
+routes.get('/avaliate', AvaliationController.index)
+routes.post('/avaliate', AvaliationController.store)
 
 module.exports = routes

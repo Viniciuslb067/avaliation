@@ -20,16 +20,12 @@ module.exports = {
       avaliation: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
       }
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-      await queryInterface.dropTable('users');
+      await queryInterface.dropTable('avaliations');
 
   }
 };

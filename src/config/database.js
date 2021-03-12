@@ -5,7 +5,7 @@ module.exports = {
   password: 'admin',
   database: 'avaliation',
   define: {
-    timestamps: true,
     underscored: true,
+    timestamps: false
   }
 }
