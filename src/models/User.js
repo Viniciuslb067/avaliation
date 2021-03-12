@@ -13,6 +13,15 @@ class User extends Model {
       sequelize
     })
   }
+  isCorrectPassword = (password, callback) => {
+    bcrypt.compare(password, this.password, function(err, same) {
+        if(err) {
+            callback(err)
+        } else {
+            callback(err, same)
+        }
+    })
+}
 }
 
 module.exports = User

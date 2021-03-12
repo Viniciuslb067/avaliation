@@ -19,11 +19,11 @@ module.exports = {
         allowNull: false,
       },
        start_date: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       end_date: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false,
       },       
       objective: {

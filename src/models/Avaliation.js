@@ -14,6 +14,9 @@ class Avaliation extends Model {
       sequelize
     })
   }
+  static associate(models) {
+    this.hasMany(models.Result, { foreignKey: 'avaliation_id:', as: 'results' })
+}
 }
 
 module.exports = Avaliation

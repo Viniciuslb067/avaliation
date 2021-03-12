@@ -10,6 +10,7 @@ const connection = new Sequelize(dbConfig)
 Avaliation.init(connection)
 Result.init(connection)
 
+Avaliation.associate(connection.models)
 Result.associate(connection.models)
 
 User.init(connection)

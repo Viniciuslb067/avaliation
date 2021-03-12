@@ -10,7 +10,7 @@ module.exports = {
         allowNull: false
       },
       ip_user: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       avaliation_id: {
