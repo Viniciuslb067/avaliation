@@ -1,11 +1,15 @@
+//Admin
 const { Model, DataTypes } = require('sequelize')
 
 class Avaliation extends Model {
   static init(sequelize) {
     super.init({
-      name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      avaliation: DataTypes.STRING
+      question: DataTypes.STRING,
+      requester: DataTypes.STRING,
+      start_date: DataTypes.DATE,
+      end_date: DataTypes.DATE,
+      objective: DataTypes.STRING,
+      status: DataTypes.INTEGER,
     }, {
       sequelize
     })

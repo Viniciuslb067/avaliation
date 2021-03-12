@@ -6,6 +6,6 @@ module.exports = {
   database: 'avaliation',
   define: {
     underscored: true,
-    timestamps: false
+    timestamps: true,
   }
 }

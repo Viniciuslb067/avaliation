@@ -2,7 +2,7 @@ const Avaliation = require('../models/Avaliation')
 
 module.exports = {
   async index(req, res) {
-    const note = await Avaliation.findAndCountAll({ where: { avaliation: 'bom' } })
+    const note = await Avaliation.findAndCountAll({ where: { status: 1 } })
     if(note === 0) {
       console.log("Nenhuma avaliação: Bom")
     } else {
@@ -12,9 +12,11 @@ module.exports = {
   },
 
   async store(req, res) {
-    const { name, email, avaliation } = req.body
+    const { question, requester, start_date, end_date, objective, status } = req.body
 
-    const note = await Avaliation.create({name, email, avaliation})
+    console.log(req.body)
+
+    const note = await Avaliation.create({question, requester, start_date, end_date, objective, status})
 
     return res.json(note)
   } 
