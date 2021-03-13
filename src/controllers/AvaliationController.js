@@ -12,11 +12,11 @@ module.exports = {
   },
 
   async store(req, res) {
-    const { question, requester, start_date, end_date, objective, status } = req.body
+    const { question, requester, start_date, end_date, objective, system ,status } = req.body
 
     console.log(req.body)
 
-    const note = await Avaliation.create({question, requester, start_date, end_date, objective, status})
+    const note = await Avaliation.create({question, requester, start_date, end_date, objective, system, status})
 
     return res.json(note)
   } 

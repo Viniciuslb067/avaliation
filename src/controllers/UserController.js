@@ -23,7 +23,7 @@ module.exports = {
             return res.status(200).json({status:2, error: "A senha tem que possuir +4 caracteres"});
           }
 
-          let user = await User.findOne({email})
+          let user = await User.findOne({where: {email} })
           const salt = await bcrypt.genSaltSync(10)
 
           if(!user) {

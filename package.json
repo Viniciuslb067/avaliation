@@ -8,9 +8,12 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
+    "popper.js": "^1.16.1",
     "sequelize": "^6.5.0"
   },
   "devDependencies": {

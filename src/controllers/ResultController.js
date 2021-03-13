@@ -24,7 +24,6 @@ module.exports = {
             return res.status(400).json({error: 'Avaliação não encontrada'})
         }
 
-
         const result = await Result.create({
             ip_user,
             note,
