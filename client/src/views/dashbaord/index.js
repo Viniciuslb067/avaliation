@@ -1,119 +1,68 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom';
 
 import api from '../../services/api'
 
-export default function Dashboard() {
 
-  const [question, setQuestion] = useState("")
-  const [requester, setRequester] = useState("")
-  const [startDate, setStartDate] = useState("")
-  const [endDate, setEndDate] = useState("")
-  const [objective, setObjective] = useState("")
-  const [system, setSystem] = useState("")
-  const [status, setStatus] = useState(0)
+export default function Dashboard() { 
+  const history = useHistory()
+  const handleClickCreate = () => history.push('/create')
+  const handleClickEdit = () => history.push('/edit/')
+  const [avaliationList, setAvaliationList] = useState([])
 
-  const handleSubmit = () => {
-    const data = {
-      question: question,
-      requester: requester,
-      start_date: startDate,
-      end_date: endDate,
-      objective: objective,
-      system: system,
-      status: status
-    }
-
-    api.post('/avaliate' , data)
-      .then(res => {
-        window.location.href='/'
+  useEffect(() => {
+    api.get('/avaliate')
+      .then((res) => {
+        setAvaliationList(res.data)
       })
-      .catch(err => {
-        console.log(err)
-      })
+  }, [])
+
+  async function handleDelete(id) {
+    await api.delete('/delete/'+id)
   }
 
   return (
-    <div className="row mt-5">
-        <div className="col-md-6 m-auto">
-          <div className="card card-body">
-            <h1 className="text-center mb-3">
-              <i className="fas fa-user-plus"></i> Criar Avaliação     
-            </h1>
-              <div className="form-group">
-                <label>Pergunta</label>
-                <input
-                  type="name"
-                  id="question"
-                  name="question"
-                  className="form-control"
-                  placeholder="Pergunta"
-                  value={question}
-                  onChange={e => setQuestion(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Solicitante</label>
-                <input
-                  id="requester"
-                  name="requester"
-                  className="form-control"
-                  placeholder="Solicitante"
-                  value={requester}
-                  onChange={e => setRequester(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Objetivo</label>
-                <input
-                  id="objective"
-                  name="objective"
-                  className="form-control"
-                  placeholder="Objetivo"
-                  value={objective}
-                  onChange={e => setObjective(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Data início</label>
-                <input
-                  type="date"
-                  id="startDate"
-                  name="startDate"
-                  className="form-control"
-                  value={startDate}
-                  onChange={e => setStartDate(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Data fim</label>
-                <input
-                  type="date"
-                  id="endDate"
-                  name="endDate"
-                  className="form-control"
-                  value={endDate}
-                  onChange={e => setEndDate(e.target.value)}
-                />
-              </div>
-            <div className="form-group">
-            <label>Sistema</label>
-            <select 
-            id="system"
-            name="system"
-            className="form-control"
-            value={system}
-            onChange={e => setSystem(e.target.value)}
-            >
-            <option></option>
-            <option>SISREF</option>
-            </select>
+    <div>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a className="navbar-brand" href="#">Painel de Controle</a>
+          <div className="collapse navbar-collapse" id="navbarColor02">
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+               <span className="navbar-toggler-icon"></span>
+                 </button>
+                  <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                      <a className="nav-link" onClick={handleClickCreate}>Criar avaliação</a>
+                    </li>
+                  </ul>
+                  <div class="form-inline my-2 my-lg-0">
+                    <button class="btn btn-secondary my-4 my-sm-1" type="submit">Logout</button>
+                  </div>
             </div>
-              <button onClick={handleSubmit} className="btn btn-primary btn-block">
-                Criar
-              </button>
+        </nav>
+        <h1 style={{display: "flex",justifyContent: "center", marginTop: "1rem"}}>Avaliçaões Ativas</h1>
+        {avaliationList.map((val) => {
+          return (
+            <div class='col-md-6'>
+
+            <div className="card border-secondary " style={{maxWidth: "20rem", marginTop: "2rem", marginLeft: "1rem"}}>
+            <div className="card-header">{val.system}</div>
+            <div className="card-body col-sm">
+              <h4 className="card-title">{val.question}</h4>
+              <p className="card-text">Solicitante: {val.requester}</p>
+              <p className="card-text">Objetivo: {val.objective}</p>
+              <p className="card-text">Data Início: {val.start_date}</p>
+              <p className="card-text">Data Fim: {val.end_date}</p>
+              <div style={{display: "flex", flexDirection: "row", justifyContent:"center"}}>
+              <button type="button" class="btn btn-secondary mr-3" onClick="editr/'+val._id}">Editar</button>
+              <button type="button" class="btn btn-danger" onClick={() => handleDelete(val.id)}>Excluir</button>
+              </div>
           </div>
-        </div>
+          </div>
       </div>
+          )
+        })}
+
+     </div>
   )
 
 }

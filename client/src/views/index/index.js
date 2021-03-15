@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 
 import "bootstrap/dist/css/bootstrap.min.css" ;
-import "bootswatch/dist/lux/bootstrap.min.css";
+import "bootswatch/dist/cosmo/bootstrap.min.css";
 import Logo from '../../images/inss-logo.jpg'
 
 export default function Index() {

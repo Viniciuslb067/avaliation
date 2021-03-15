@@ -34,7 +34,6 @@ module.exports = {
                   level: 0,
                   acess: 0
               })
-
               return res.status(200).json({status:1, success: "Usuário cadastrado com sucesso!"})
 
           } else {
@@ -43,81 +42,44 @@ module.exports = {
     },
 
     async login(req, res) {
-        const secret = 'secret'
-        const { email, password, acess } = req.body
+      const secret = 'secret'
+      const {email, password} = req.body
+      User.findOne({ 
+        where: {email}
+      }).then(user => {
+        if(!user) {
+          return res.status(200).json({status:2, error: "Email não cadastrado!"});
+        }
 
-        console.log(req.body)
+        var checkPassword = bcrypt.compareSync(password, user.password)
+        if(!checkPassword) {
+          return res.status(200).json({status:2, error: "Senha inválida"});
+        }
 
-        // isCorrectPassword = (password, callback) => {
-        //     bcrypt.compare(password, this.password, function(err, same) {
-        //         if(err) {
-        //             callback(err)
-        //         } else {
-        //             callback(err, same)
-        //         }
-        //     })
-        // }
+        var token = jwt.sign({email}, secret, {
+          expiresIn: '24h'
+        })
+        res.cookie('token', token, {httpOnly: true})
+        res.status(200).json({status:1, auth:true, token: token, id_user: user._id, user_name: user.name, user_type: user.level})
 
-        //  User.findOne({ where: {email} }, function(err, user) {
-        //      console.log(user)
-        //  })
-
-
-
-        // let user = await User.findOne({email})
-        // console.log(user)
-
-        // if(!user) {
-        //     if(!email || !password) {
-        //         return res.status(200).json({status:2, error: "Preencha todos os campos!"})
-        //     } else {
-        //         return res.status(200).json({status:2, error: "Email não cadastrado!"})
-        //     }
-        // }
-
-        // user.isCorrectPassword(password, async function (err, same) {
-        //     if(!same) {
-        //         return res.status(200).json({status:2, error: "Senha incorreta!"})
-        //     } else {
-        //         const payload = {email}
-        //         const token = jwt.sign(payload, secret, {
-        //           expiresIn: '24h'
-        //         })
-        //         res.cookie('token', token, {httpOnly: true})
-        //         res.status(200).json({status:1, auth:true, token: token, id_user: user._id, user_name: user.name, user_type: user.level})
-        //     }
-        // })
-
-        User.findOne({ where: {email} }, function(err, user) {
-             if(err) {
-                 console.log(err)
-             } else if (!user) {
-                 if(!email || password) {
-                     return res.status(200).json({status:2, error: "Preencha todos os campos!"})
-                 } else 
-                     return res.status(200).json({status:2, error: "Email não cadastrado!"})
-                 } else {
-                    
-                    var passwordIsValid = bcrypt.compareSync(
-                        req.body.password,
-                        user.password
-                      );
-
-                      if (!passwordIsValid) {
-                        return res.status(401).send({
-                          accessToken: null,
-                          message: "Invalid Password!"
-                        });
-                      }
-
-                         const payload = {email}
-                         const token = jwt.sign(payload, secret, {
-                           expiresIn: '24h'
-                         })
-                         res.cookie('token', token, {httpOnly: true})
-                         res.status(200).json({status:1, auth:true, token: token, id_user: user._id, user_name: user.name, user_type: user.level})
-                       
-             }
-         })
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    
+    async loginCheck(req, res) {
+      const secret = 'secret'
+      const token = req.query.token
+      if(!token) {
+        res.json({status:401,msg:'Não autorizado: Token inexistente!'});
+      } else {
+        jwt.verify(token, secret, function(err, decoded) {
+          if(err) {
+            return res.status(200).json({status:2, error: "Não autorizado"});
+          } else {
+            res.json({status:200})
+          }
+        })
+      }
     }
 }
