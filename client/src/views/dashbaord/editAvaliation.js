@@ -19,29 +19,34 @@ export default function Edit() {
       async function getInfo() {
           const res = await api.get('/edit/'+id)
           setQuestion(res.data.question)
-          setQuestion(res.data.question)
-          setQuestion(res.data.question)
-          setQuestion(res.data.question)
-
+          setRequester(res.data.requester)
+          setStartDate(res.data.start_date)
+          setEndDate(res.data.end_date)
+          setObjective(res.data.objective)
+          setSystem(res.data.system)
+          setStatus(res.data.status)
       }
-  })
+      getInfo()
+  }, [id])
 
-  const handleSubmit = () => {
+  async function handleSubmit() {
     const data = {
-      question: question,
-      requester: requester,
-      start_date: startDate,
-      end_date: endDate,
-      objective: objective,
-      system: system,
-      status: status
-    }
-
-    api.post('/avaliate' , data)
+           question: question,
+           requester: requester,
+           start_date: startDate,
+           end_date: endDate,
+           objective: objective,
+           system: system,
+           status: status,
+           id:id
+         }
+  
+    await api.put('/edit' , data)
       .then(res => {
         if(res.data.status === 1) {
           alert(res.data.success)
-          window.location.href='/'
+          window.location.href='/dashboard'
+          console.log(res.data.status)
         } else {
           alert(res.data.error)
         }
@@ -49,7 +54,8 @@ export default function Edit() {
       .catch(err => {
         console.log(err)
       })
-  }
+    }
+  
 
   return (
     <div className="row mt-5">
@@ -127,8 +133,21 @@ export default function Edit() {
             <option>SISREF</option>
             </select>
             </div>
+            <div className="form-group">
+            <label>Nível</label>
+            <select 
+            id="level"
+            name="level"
+            className="form-control"
+            value={status}
+            onChange={e => setStatus(e.target.value)}
+            >
+            <option>Ativar</option>
+            <option>Desativar</option>
+            </select>
+          </div>
               <button onClick={handleSubmit} className="btn btn-primary btn-block">
-                Criar
+                Editar
               </button>
           </div>
         </div>

@@ -1,0 +1,19 @@
+input[type="radio"] {
+  display: none;
+}
+
+.rate {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.star {
+  cursor: pointer;
+  transition: color 200ms;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10rem;
+}

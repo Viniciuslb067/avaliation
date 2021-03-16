@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import api from '../../services/api'
 
 export default function Create() {
-
+  const history = useHistory()
+  const handleClickDashboard = () => history.push('/dashboard')
   const [question, setQuestion] = useState("")
   const [requester, setRequester] = useState("")
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [objective, setObjective] = useState("")
   const [system, setSystem] = useState("")
-  const [status, setStatus] = useState(0)
+  const [status, setStatus] = useState(1)
 
   const handleSubmit = () => {
     const data = {
@@ -27,7 +29,7 @@ export default function Create() {
       .then(res => {
         if(res.data.status === 1) {
           alert(res.data.success)
-          window.location.href='/'
+          handleClickDashboard()
         } else {
           alert(res.data.error)
         }
@@ -113,9 +115,9 @@ export default function Create() {
             <option>SISREF</option>
             </select>
             </div>
-              <button onClick={handleSubmit} className="btn btn-primary btn-block">
+            <button onClick={handleSubmit} className="btn btn-primary btn-block">
                 Criar
-              </button>
+            </button>
           </div>
         </div>
       </div>

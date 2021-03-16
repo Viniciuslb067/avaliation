@@ -1,0 +1,22 @@
+.box {
+  margin: 20px;
+  max-width: 20rem;
+  margin-left: 4.5rem;
+}
+
+.grid {
+  min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.grid > div {
+  flex-basis: calc(33.33% - 40px);
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

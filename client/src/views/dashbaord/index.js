@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom';
+import './style.css'
+import { useHistory} from 'react-router-dom';
 
 import api from '../../services/api'
-
+import { getToken, logout } from '../../services/auth'
 
 export default function Dashboard() { 
   const history = useHistory()
   const handleClickCreate = () => history.push('/create')
-  const handleClickEdit = () => history.push('/edit/')
+  const handleClickLogin = () => history.push('/login')
   const [avaliationList, setAvaliationList] = useState([])
 
   useEffect(() => {
@@ -19,6 +20,33 @@ export default function Dashboard() {
 
   async function handleDelete(id) {
     await api.delete('/delete/'+id)
+    window.location.reload(); 
+  }
+
+  async function handleLogout() {
+    const res = await api.get('/logout', {headers: {token: getToken()}})
+    logout()
+    alert(res.data.success)
+    handleClickLogin()
+  }
+
+  const renderCard = (card, index) => {
+    return (
+      <div className="box card border-secondary" key={index}>
+        <div className="card-header">{card.system}</div>
+          <div className="card-body col-sm">
+              <h4 className="card-title">{card.question}</h4>
+              <p className="card-text">Solicitante: {card.requester}</p>
+              <p className="card-text">Objetivo: {card.objective}</p>
+              <p className="card-text">Data Início: {card.start_date}</p>
+              <p className="card-text">Data Fim: {card.end_date}</p>
+              <div className="button">
+              <a href={'/edit/'+card.id} className="btn btn-secondary mr-3">Editar</a>
+              <button type="button" className="btn btn-danger" onClick={() => handleDelete(card.id)}>Excluir</button>
+            </div>
+        </div>
+    </div>
+    )
   }
 
   return (
@@ -31,38 +59,21 @@ export default function Dashboard() {
                  </button>
                   <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                      <a className="nav-link" onClick={handleClickCreate}>Criar avaliação</a>
+                      <a className="nav-link" href="" onClick={handleClickCreate}>Criar avaliação</a>
+                    </li>
+                    <li className="nav-item">
+                    <a className="nav-link" href="" onClick={handleClickCreate}>Exibir avaliações desativadas</a>
                     </li>
                   </ul>
-                  <div class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-secondary my-4 my-sm-1" type="submit">Logout</button>
+                  <div className="form-inline my-2 my-lg-0">
+                    <button onClick={handleLogout} className="btn btn-secondary my-4 my-sm-1" type="submit">Logout</button>
                   </div>
             </div>
         </nav>
         <h1 style={{display: "flex",justifyContent: "center", marginTop: "1rem"}}>Avaliçaões Ativas</h1>
-        {avaliationList.map((val) => {
-          return (
-            <div class='col-md-6'>
-
-            <div className="card border-secondary " style={{maxWidth: "20rem", marginTop: "2rem", marginLeft: "1rem"}}>
-            <div className="card-header">{val.system}</div>
-            <div className="card-body col-sm">
-              <h4 className="card-title">{val.question}</h4>
-              <p className="card-text">Solicitante: {val.requester}</p>
-              <p className="card-text">Objetivo: {val.objective}</p>
-              <p className="card-text">Data Início: {val.start_date}</p>
-              <p className="card-text">Data Fim: {val.end_date}</p>
-              <div style={{display: "flex", flexDirection: "row", justifyContent:"center"}}>
-              <button type="button" class="btn btn-secondary mr-3" onClick="editr/'+val._id}">Editar</button>
-              <button type="button" class="btn btn-danger" onClick={() => handleDelete(val.id)}>Excluir</button>
-              </div>
-          </div>
-          </div>
-      </div>
-          )
-        })}
-
+        <div className="grid">
+        {avaliationList.map(renderCard)}
+        </div>
      </div>
   )
-
 }
