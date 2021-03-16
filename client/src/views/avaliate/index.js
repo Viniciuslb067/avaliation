@@ -11,13 +11,38 @@ export default function Avaliate() {
   const [avaliationList, setAvaliationList] = useState([])
   const [rating, setRating] = useState(null)
   const [hover, setHover] = useState(null)
+  const [coment, setComment] = useState("")
 
   useEffect(() => {
     api.get('/avaliate')
       .then((res) => {
         setAvaliationList(res.data)
       })
-  }, [])
+  }, [])  
+
+  function getIP(json) {
+    alert("MEU ip: " + json.ip)
+  }
+
+  async function handleSubmit() {
+    
+    "https://api.ipify.org?format=jsonp&callback=getIP"
+
+    const data = {
+      ip_user: "123",
+      comments: coment,
+      note: rating,
+    }
+
+    console.log(rating)
+    await api.post('/avaliate/1/avaliation', data)
+      .then(res => {
+        const ip = res.getRemoteAddr()
+        console.log(res.getRemoteAddr())
+      })
+
+  }
+
 
   const renderCard = (card, index) => {
     return (
@@ -43,30 +68,30 @@ export default function Avaliate() {
                 size={40}
                 onMouseEnter={() => setHover(ratingValue)}
                 onMouseLeave={() => setHover(null)}
-                onClick={handleSubmit} 
                 />
           </label> 
         )
       })}
       <p>Estrelas: {rating}</p>
+      <input 
+        type="input" 
+        className="input-coment" 
+        placeholder="Comentario" 
+        onChange={(event) => {setComment(event.target.value)}}
+      />
+      <div>
+      <a href="" className="button" style={{textDecoration: "none"}}>Pular</a>
+      <a href="" 
+      className="button" 
+      style={{textDecoration: "none"}}
+      onClick={handleSubmit}
+      >Enviar</a>
+      </div>
           </h5>
         </div>
       </div>
     </div>
     )
-  }
-
-  async function handleSubmit() {
-    
-    const data = {
-      ip_user: "123",
-      note: rating,
-      comments: "Ainda tem que melhorar"
-    }
-
-
-    console.log(rating)
-    await api.post('/avaliate/1/avaliation', data)
   }
 
   return (

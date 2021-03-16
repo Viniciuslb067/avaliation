@@ -1,7 +1,26 @@
 .box {
+  font-size: 20px;
   margin: 20px;
-  max-width: 20rem;
+  max-width: 25rem;
   margin-left: 4.5rem;
+}
+
+.text-nav {
+  font-size: 25px;
+  font-weight: 100;
+}
+
+.text-card-title {
+  font-size: 25px;
+  font-weight: lighter;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  font-size: 50px;
+  font-weight: 500;
 }
 
 .grid {
@@ -12,7 +31,7 @@
 }
 
 .grid > div {
-  flex-basis: calc(33.33% - 40px);
+  flex-basis: calc(20% - 10px);
 }
 
 .button {

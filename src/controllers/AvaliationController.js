@@ -37,8 +37,18 @@ module.exports = {
   },
 
   async index(req, res) {
+
+    //DNS
+
+    //Find Where: system: DNS
+
+
+
     const note = await Avaliation.findAll({ where: { status: 1 } })
     res.json(note)
+
+
+
   },
 
   async store(req, res) {

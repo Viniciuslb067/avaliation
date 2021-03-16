@@ -1,5 +1,7 @@
 const Avaliation = require('../models/Avaliation')
 const Result = require('../models/Result')
+const requestIp = require('request-ip')
+
 
 module.exports = {
     async index(req, res) {
@@ -16,7 +18,10 @@ module.exports = {
 
     async store(req, res) {
         const { avaliation_id } = req.params
-        const { ip_user, note, comments } = req.body
+        const { note, comments } = req.body
+
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
+        (req.connection.socket ? req.connection.socket.remoteAddress : null);
 
         const avaliation = await Avaliation.findByPk(avaliation_id)
 
@@ -25,7 +30,7 @@ module.exports = {
         }
 
         const result = await Result.create({
-            ip_user,
+            ip_user: ip,
             note,
             comments,
             avaliation_id
