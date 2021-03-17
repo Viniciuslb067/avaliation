@@ -1,5 +1,4 @@
 const Avaliation = require('../models/Avaliation')
-const User = require('../models/User')
 
 module.exports = {
 
@@ -10,22 +9,14 @@ module.exports = {
   },
 
   async update(req, res) {
-      const {id, question, requester, objective, start_date, end_date, system, status} = req.body
-
-     if(status === "Ativar") {
-       status == 1
-     } else {
-       status == 0
-     }
+      const {id, question, requester, start_date, end_date, status} = req.body
 
       Avaliation.update(
         {
           question: question,
           requester: requester,
-          objective: objective,
           start_date: start_date,
           end_date: end_date,
-          system: system,
           status: status
         },
         {
@@ -42,22 +33,22 @@ module.exports = {
 
     //Find Where: system: DNS
 
+    const url = new URL(req.url, `http://${req.headers.host}`)
 
+    console.log(url.hostname)
 
-    const note = await Avaliation.findAll({ where: { status: 1 } })
+    const note = await Avaliation.findAll({ where: { status: "Ativa" } })
     res.json(note)
-
-
 
   },
 
   async store(req, res) {
-    const { question, requester, start_date, end_date, objective, system ,status } = req.body
+    const { question, requester, start_date, end_date, system} = req.body
 
-    if(!question || !requester || !start_date || !end_date || !objective || !system) {
+    if(!question || !requester || !start_date || !end_date) {
       return res.status(200).json({status:2, error: "Preencha todos os campos!"})
     } else {
-      await Avaliation.create({question, requester, start_date, end_date, objective, system, status})
+      await Avaliation.create({question, requester, start_date, end_date, system ,status: "Ativa"})
 
       return res.status(200).json({status:1, success: "Avaliação criada com sucesso!"})
     }

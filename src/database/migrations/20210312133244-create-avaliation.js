@@ -25,17 +25,13 @@ module.exports = {
       end_date: {
         type: Sequelize.DATE,
         allowNull: false,
-      },       
-      objective: {
-        type: Sequelize.STRING,
-        allowNull: false,
       },
       system: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
+      }, 
       status: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {
@@ -52,7 +48,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
 
-     await queryInterface.dropTable('avaliations');
+    //  await queryInterface.dropTable('avaliations');
      
   }
 };

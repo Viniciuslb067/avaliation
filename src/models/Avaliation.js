@@ -8,9 +8,8 @@ class Avaliation extends Model {
       requester: DataTypes.STRING,
       start_date: DataTypes.DATE,
       end_date: DataTypes.DATE,
-      objective: DataTypes.STRING,
       system: DataTypes.STRING,
-      status: DataTypes.INTEGER,
+      status: DataTypes.STRING,
     }, {
       sequelize
     })
