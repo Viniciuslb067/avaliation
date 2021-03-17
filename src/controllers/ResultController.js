@@ -1,7 +1,5 @@
 const Avaliation = require('../models/Avaliation')
 const Result = require('../models/Result')
-const requestIp = require('request-ip')
-
 
 module.exports = {
     async index(req, res) {
