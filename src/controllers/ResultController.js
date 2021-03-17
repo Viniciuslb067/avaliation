@@ -15,7 +15,7 @@ module.exports = {
     },
 
     async store(req, res) {
-        const { avaliation_id } = req.params
+        const { avaliation_id, system_id  } = req.params
         const { note, comments } = req.body
 
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
@@ -31,18 +31,13 @@ module.exports = {
             ip_user: ip,
             note,
             comments,
-            avaliation_id
+            status: "Enviado",
+            avaliation_id,
+            system_id
+
         })
 
         return res.json(result) 
-
-        if(!user) {
-   
-        } else {
-            return res.status(400).json({error: 'Avaliação já cadastrada'})
-        }
-
-
 
     }
 }

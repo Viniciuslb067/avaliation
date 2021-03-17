@@ -35,7 +35,7 @@ export default function Avaliate() {
     }
 
     console.log(rating)
-    await api.post('/avaliate/1/avaliation', data)
+    await api.post('/avaliate/1/system/1', data)
       .then(res => {
         const ip = res.getRemoteAddr()
         console.log(res.getRemoteAddr())

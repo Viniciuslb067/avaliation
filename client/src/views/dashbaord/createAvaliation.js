@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import api from '../../services/api'
@@ -10,9 +10,17 @@ export default function Create() {
   const [requester, setRequester] = useState("")
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
-  const [objective, setObjective] = useState("")
   const [system, setSystem] = useState("")
-  const [status, setStatus] = useState(1)
+  const [systemList, setSystemList] = useState([])
+
+  useEffect(() => {
+    api.get('/system')
+      .then((res) => {
+        setSystemList(res.data)
+        console.log(systemList)
+      })
+  }, [])
+
 
   const handleSubmit = () => {
     const data = {
@@ -20,12 +28,10 @@ export default function Create() {
       requester: requester,
       start_date: startDate,
       end_date: endDate,
-      objective: objective,
-      system: system,
-      status: status
+      system: system
     }
 
-    api.post('/avaliate' , data)
+    api.post('/avaliate', data)
       .then(res => {
         if(res.data.status === 1) {
           alert(res.data.success)
@@ -70,17 +76,6 @@ export default function Create() {
                 />
               </div>
               <div className="form-group">
-                <label>Objetivo</label>
-                <input
-                  id="objective"
-                  name="objective"
-                  className="form-control"
-                  placeholder="Objetivo"
-                  value={objective}
-                  onChange={e => setObjective(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
                 <label>Data início</label>
                 <input
                   type="date"
@@ -108,11 +103,14 @@ export default function Create() {
             id="system"
             name="system"
             className="form-control"
-            value={system}
             onChange={e => setSystem(e.target.value)}
             >
             <option></option>
-            <option>SISREF</option>
+            {systemList.map((val) => { 
+              return (
+            <option>{val.name}</option>
+              )
+            })}
             </select>
             </div>
             <button onClick={handleSubmit} className="btn btn-primary btn-block">

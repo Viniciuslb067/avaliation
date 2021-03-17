@@ -19,12 +19,23 @@ module.exports = {
         references: { model: 'avaliations', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-      },      
+      },
+      system_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'systems', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },        
       note: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
       comments: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      status: {
         type: Sequelize.STRING,
         allowNull: false,
       },
