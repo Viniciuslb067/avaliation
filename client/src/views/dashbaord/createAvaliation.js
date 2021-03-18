@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import Header from './header';
+
 import api from '../../services/api'
 
 export default function Create() {
@@ -46,6 +48,8 @@ export default function Create() {
   }
 
   return (
+    <>
+    <Header />
     <div className="row mt-5">
         <div className="col-md-6 m-auto">
           <div className="card card-body">
@@ -108,7 +112,7 @@ export default function Create() {
             <option></option>
             {systemList.map((val) => { 
               return (
-            <option>{val.name}</option>
+            <option>{val.system}</option>
               )
             })}
             </select>
@@ -119,6 +123,7 @@ export default function Create() {
           </div>
         </div>
       </div>
+      </>
   )
 
 }

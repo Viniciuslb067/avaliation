@@ -27,7 +27,7 @@ module.exports = {
     async index(req, res) {
 
         const systemName = await System.findAll()
-
+        console.log(systemName)
         res.json(systemName)
 
     }

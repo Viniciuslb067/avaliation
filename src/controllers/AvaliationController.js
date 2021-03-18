@@ -1,4 +1,5 @@
 const Avaliation = require('../models/Avaliation')
+const System = require('../models/System')
 
 module.exports = {
 
@@ -28,17 +29,27 @@ module.exports = {
   },
 
   async index(req, res) {
+    const Assessment = await Avaliation.findAll({ where: { status: "Ativa" } })
+    res.json(Assessment)
 
-    //DNS
+  },
 
-    //Find Where: system: DNS
+  async inactiveAssessments(req, res) {
+    const inactiveAssessments = await Avaliation.findAll({ where: { status: "Inativa" } })
+    res.json(inactiveAssessments)
+  },
+
+  async avaliar(req, res) {
 
     const url = new URL(req.url, `http://${req.headers.host}`)
 
-    console.log(url.hostname)
+    const system = await System.findOne({ where: {system: url.hostname} })
 
-    const note = await Avaliation.findAll({ where: { status: "Ativa" } })
-    res.json(note)
+    if(system) {
+      const avaliar = await Avaliation.findAll({ where: {system: system.system} })
+      res.json(avaliar)
+    }
+
 
   },
 

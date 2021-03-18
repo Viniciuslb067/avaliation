@@ -56,14 +56,12 @@ export default function Edit() {
       })
     }
   
-
   return (
     <div className="row mt-5">
         <div className="col-md-6 m-auto">
           <div className="card card-body">
             <h1 className="text-center mb-3">
-              <i className="fas fa-user-plus"></i> Editar Avaliação     
-            </h1>
+              <i className="fas fa-user-plus"></i> Editar Avaliação</h1>
               <div className="form-group">
                 <label>Pergunta</label>
                 <input
@@ -120,32 +118,32 @@ export default function Edit() {
                   onChange={e => setEndDate(e.target.value)}
                 />
               </div>
-            <div className="form-group">
-            <label>Sistema</label>
-            <select 
-            id="system"
-            name="system"
-            className="form-control"
-            value={system}
-            onChange={e => setSystem(e.target.value)}
-            >
-            <option></option>
-            <option>SISREF</option>
-            </select>
-            </div>
-            <div className="form-group">
-            <label>Nível</label>
-            <select 
-            id="level"
-            name="level"
-            className="form-control"
-            value={status}
-            onChange={e => setStatus(e.target.value)}
-            >
-            <option>Ativar</option>
-            <option>Desativar</option>
-            </select>
-          </div>
+              <div className="form-group">
+                <label>Sistema</label>
+                <select 
+                id="system"
+                name="system"
+                className="form-control"
+                value={system}
+                onChange={e => setSystem(e.target.value)}
+                >
+                <option></option>
+                <option>SISREF</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Nível</label>
+                <select 
+                id="level"
+                name="level"
+                className="form-control"
+                value={status}
+                onChange={e => setStatus(e.target.value)}
+                >
+                <option>Ativar</option>
+                <option>Desativar</option>
+                </select>
+              </div>
               <button onClick={handleSubmit} className="btn btn-primary btn-block">
                 Editar
               </button>

@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom'
 
 import api from '../../services/api'
 
+import Header from './header';
+
 export default function RegisterSystem() {
   const history = useHistory()
   const handleClickDashboard = () => history.push('/dashboard')
@@ -33,6 +35,8 @@ export default function RegisterSystem() {
   }
 
   return (
+    <>
+    <Header />
     <div className="row mt-5">
         <div className="col-md-6 m-auto">
           <div className="card card-body">
@@ -85,6 +89,7 @@ export default function RegisterSystem() {
           </div>
         </div>
       </div>
+      </>
   )
 
 }

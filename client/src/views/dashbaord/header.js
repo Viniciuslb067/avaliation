@@ -26,8 +26,6 @@ export default function Header() {
     handleClickLogin()
   }
 
-  console.log(PrivateRoute)
-
   function dashboard() {
     if(PrivateRoute) {
         return <div>
@@ -45,7 +43,10 @@ export default function Header() {
                     <a className="text-nav nav-link" href="/system">Cadastrar Sistema</a>
                     </li>
                     <li className="nav-item">
-                    <a className="text-nav nav-link" href="#">Exibir avaliações desativadas</a>
+                    <a className="text-nav nav-link" href="/avaliacao/inativa">Exibir avaliações inativas</a>
+                    </li>
+                    <li className="nav-item">
+                    <a className="text-nav nav-link" href="/all/users">Exibir usuários</a>
                     </li>
                   </ul>
                   <div className="form-inline my-2 my-lg-0">

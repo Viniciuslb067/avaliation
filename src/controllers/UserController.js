@@ -4,6 +4,11 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
 module.exports = {
+    async all(req, res) {
+      const users = await User.findAll()
+      res.json(users)
+    },
+
     async store(req, res) {
         const { name, email, password, password2 } = req.body
 
@@ -31,7 +36,7 @@ module.exports = {
                   name,
                   email,
                   password: bcrypt.hashSync(password, salt),
-                  level: 0,
+                  level: "Tecnico",
                   acess: 0
               })
               return res.status(200).json({status:1, success: "Usuário cadastrado com sucesso!"})
@@ -91,5 +96,11 @@ module.exports = {
         res.status(401).send("Erro ao sair")
       }
       return res.status(200).json({status:1, success: "Sessão finalizada com sucesso!"})
+    },
+
+    async deleteUser(req, res) {
+      const { id } = req.params
+      await User.destroy({ where: {id: id}  })
+      return res.status(200).json({status:1, success: "Avaliação excluida com sucesso!"})
     }
 }

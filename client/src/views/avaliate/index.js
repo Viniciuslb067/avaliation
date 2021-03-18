@@ -1,5 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css" ;
-import "bootswatch/dist/cosmo/bootstrap.min.css";
 import { FaStar } from 'react-icons/fa'
 import React, { useState, useEffect } from 'react'
 
@@ -14,33 +12,18 @@ export default function Avaliate() {
   const [coment, setComment] = useState("")
 
   useEffect(() => {
-    api.get('/avaliate')
+    api.get('/avaliar')
       .then((res) => {
         setAvaliationList(res.data)
       })
-  }, [])  
-
-  function getIP(json) {
-    alert("MEU ip: " + json.ip)
-  }
+  }, [])
 
   async function handleSubmit() {
-    
-    "https://api.ipify.org?format=jsonp&callback=getIP"
-
     const data = {
-      ip_user: "123",
       comments: coment,
       note: rating,
     }
-
-    console.log(rating)
     await api.post('/avaliate/1/system/1', data)
-      .then(res => {
-        const ip = res.getRemoteAddr()
-        console.log(res.getRemoteAddr())
-      })
-
   }
 
 
@@ -80,12 +63,19 @@ export default function Avaliate() {
         onChange={(event) => {setComment(event.target.value)}}
       />
       <div>
-      <a href="" className="button" style={{textDecoration: "none"}}>Pular</a>
-      <a href="" 
-      className="button" 
-      style={{textDecoration: "none"}}
-      onClick={handleSubmit}
-      >Enviar</a>
+      <a 
+        href="" 
+        className="button" 
+        style={{textDecoration: "none"}}
+        > Pular
+      </a>
+      <a 
+        href="" 
+        className="button" 
+        style={{textDecoration: "none"}}
+        onClick={handleSubmit}
+        > Enviar
+      </a>
       </div>
           </h5>
         </div>
@@ -96,7 +86,7 @@ export default function Avaliate() {
 
   return (
     <div>
-      {avaliationList.map(renderCard)}
+      {avaliationList.map((renderCard))}
     </div>
   )
 
