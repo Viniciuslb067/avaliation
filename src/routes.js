@@ -12,11 +12,11 @@ routes.get('/edit/:id', AvaliationController.edit)
 routes.put('/edit', AvaliationController.update)
 routes.get('/avaliacao', AvaliationController.index)
 routes.get('/avaliacao/inativa', AvaliationController.inactiveAssessments)
-routes.get('/avaliar', AvaliationController.avaliar)
+// routes.get('/avaliar', AvaliationController.avaliar)
 routes.delete('/delete/:id', AvaliationController.delete)
 routes.post('/avaliate', AvaliationController.store)
 
-routes.get('/avaliate/:avaliation_id/avaliation', ResultController.index)
+routes.get('/avaliate/:avaliation_id', ResultController.index)
 routes.post('/avaliate/:avaliation_id/system/:system_id', ResultController.store)
 
 routes.get('/all', UserController.all)

@@ -15,6 +15,7 @@ module.exports = {
       },
       avaliation_id: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
         allowNull: false,
         references: { model: 'avaliations', key: 'id' },
         onUpdate: 'CASCADE',
@@ -22,6 +23,7 @@ module.exports = {
       },
       system_id: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
         allowNull: false,
         references: { model: 'systems', key: 'id' },
         onUpdate: 'CASCADE',

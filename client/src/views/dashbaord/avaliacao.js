@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { FaTimes } from 'react-icons/fa'
 
 import api from '../../services/api'
-import { getToken, logout } from '../../services/auth'
 
 import Header from './header';
 

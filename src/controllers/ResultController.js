@@ -1,17 +1,28 @@
 const Avaliation = require('../models/Avaliation')
+const System = require('../models/System')
 const Result = require('../models/Result')
 
 module.exports = {
     async index(req, res) {
         const { avaliation_id } = req.params
+    
+        console.log(avaliation_id)
+    
+    
+        const url = new URL(req.url, `http://${req.headers.host}`)
+    
+        // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
+        // (req.connection.socket ? req.connection.socket.remoteAddress : null);
+    
+        // const user = await Result.findOne({ where: {ip_user: ip} })
 
-        const avaliation = await Avaliation.findByPk(avaliation_id, {
-            include: { association: 'results' }
-        })
-
-        console.log(avaliation)
-
-        return res.json(avaliation)
+         const system = await System.findOne({ where: {system: url.hostname} })
+    
+           if(system) {
+             const avaliar = await Avaliation.findAll({ where: {system: system.system} })
+             res.json(avaliar)
+             console.log(avaliar)
+           }
     },
 
     async store(req, res) {

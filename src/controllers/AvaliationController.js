@@ -1,5 +1,6 @@
 const Avaliation = require('../models/Avaliation')
 const System = require('../models/System')
+const Result = require('../models/Result')
 
 module.exports = {
 
@@ -39,19 +40,29 @@ module.exports = {
     res.json(inactiveAssessments)
   },
 
-  async avaliar(req, res) {
+  // async avaliar(req, res) {
+    
+  //   const { id  } = req.params
 
-    const url = new URL(req.url, `http://${req.headers.host}`)
+  //   const { avaliation_id } = req.params
 
-    const system = await System.findOne({ where: {system: url.hostname} })
+  //   console.log(avaliation_id)
 
-    if(system) {
-      const avaliar = await Avaliation.findAll({ where: {system: system.system} })
-      res.json(avaliar)
-    }
+  //   console.log(id)
+
+  //   const url = new URL(req.url, `http://${req.headers.host}`)
+
+  //   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
+  //   (req.connection.socket ? req.connection.socket.remoteAddress : null);
 
 
-  },
+  //   const system = await System.findOne({ where: {system: url.hostname} })
+    
+  //     if(system) {
+  //       const avaliar = await Avaliation.findAll({ where: {system: system.system} })
+  //       res.json(avaliar)
+  //     }
+  // },
 
   async store(req, res) {
     const { question, requester, start_date, end_date, system} = req.body

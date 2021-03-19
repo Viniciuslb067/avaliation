@@ -46,7 +46,6 @@ export default function Edit() {
         if(res.data.status === 1) {
           alert(res.data.success)
           window.location.href='/dashboard'
-          console.log(res.data.status)
         } else {
           alert(res.data.error)
         }
