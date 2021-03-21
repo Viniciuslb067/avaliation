@@ -40,40 +40,23 @@ module.exports = {
     res.json(inactiveAssessments)
   },
 
-  // async avaliar(req, res) {
-    
-  //   const { id  } = req.params
-
-  //   const { avaliation_id } = req.params
-
-  //   console.log(avaliation_id)
-
-  //   console.log(id)
-
-  //   const url = new URL(req.url, `http://${req.headers.host}`)
-
-  //   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
-  //   (req.connection.socket ? req.connection.socket.remoteAddress : null);
-
-
-  //   const system = await System.findOne({ where: {system: url.hostname} })
-    
-  //     if(system) {
-  //       const avaliar = await Avaliation.findAll({ where: {system: system.system} })
-  //       res.json(avaliar)
-  //     }
-  // },
-
   async store(req, res) {
     const { question, requester, start_date, end_date, system} = req.body
 
     if(!question || !requester || !start_date || !end_date) {
       return res.status(200).json({status:2, error: "Preencha todos os campos!"})
-    } else {
-      await Avaliation.create({question, requester, start_date, end_date, system ,status: "Ativa"})
+    }
+
+    let avaliation = await Avaliation.findOne({ where: {question, system} })
+
+    if(!avaliation) {
+      Avaliation.create({question, requester, start_date, end_date, system ,status: "Ativa"})
 
       return res.status(200).json({status:1, success: "Avaliação criada com sucesso!"})
+    } else {
+      return res.status(200).json({status:2, error: "Já existe uma avaliação com essa pergunta para o sistema: " + system});
     }
+
 
   },
 

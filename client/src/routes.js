@@ -11,6 +11,7 @@ import avaliacaoInativa from './views/dashbaord/avaliacaoInativa'
 import Avaliate from './views/avaliate/index'
 import RegisterSystem from './views/dashbaord/registerSystem'
 import Users from './views/dashbaord/users'
+import Resultado from './views/dashbaord/resultado'
 
 import PrivateRoute from './services/wAuth'
 
@@ -27,6 +28,7 @@ export default function Routes() {
           <PrivateRoute path='/dashboard' component={Avaliacao}/>
           <Route path='/avaliacao/inativa' component={avaliacaoInativa}/>
           <Route path='/all/users' component={Users}/>
+          <Route path='/resultado' component={Resultado}/>
           <Route path='/' component={Index}/>
     </Switch>
     </BrowserRouter>

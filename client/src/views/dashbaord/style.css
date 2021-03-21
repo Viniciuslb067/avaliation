@@ -39,3 +39,7 @@
   flex-direction: row;
   justify-content: center;
 }
+
+.question {
+  cursor: pointer;
+}

@@ -16,26 +16,31 @@ export default function Avaliate() {
   const [coment, setComment] = useState("")
   const [id, setId] = useState(0)
 
-  console.log(id)
-
   useEffect(() => {
-    api.get('/avaliate/'+id)
+    api.get('/avaliate/2')
       .then((res) => {
         setAvaliationList(res.data)
-        console.log(res.data.Avaliation.dataValues.id)
       })
-  }, [id])
+  }, [])
 
-  async function handleSubmit() {
+  async function handleSubmit(id) {
     const data = {
       comments: coment,
       note: rating,
     }
+    console.log(id)
+
     await api.post('/avaliate/'+id+'/system/1', data)
-    alert("Muito obrigado por responder a avaliação!")
-    setTimeout(() => {
-      setVisible(false);
-    }, 1000);
+      .then(res => {
+        if(res.data.status === 2) {
+          <div>
+            <p>{res.data.error}</p>
+          </div>
+        } else {
+          alert("Muito obrigado por responder a avaliação!")
+          setTimeout(() => { setVisible(false) }, 1000);
+        }
+    })
   }
 
   const closeModal = () => {
@@ -55,7 +60,7 @@ export default function Avaliate() {
       <Button>Pular</Button>,
       <Button
         type="primary"
-        onClick={handleSubmit}
+        onClick={() => handleSubmit(card.id)}
         >
         Enviar
         </Button>

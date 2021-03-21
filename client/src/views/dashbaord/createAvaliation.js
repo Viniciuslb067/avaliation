@@ -19,7 +19,6 @@ export default function Create() {
     api.get('/system')
       .then((res) => {
         setSystemList(res.data)
-        console.log(systemList)
       })
   }, [])
 

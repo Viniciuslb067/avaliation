@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import {useHistory} from 'react-router-dom'
 import { FaTimes } from 'react-icons/fa'
 
 import api from '../../services/api'
@@ -7,7 +8,9 @@ import Header from './header';
 
 import './style.css'
 
-export default function Avaliacao() { 
+export default function Avaliacao() {
+  const history = useHistory()
+  const handleClickWhatever = () => history.push('/resultado')
   const [avaliationList, setAvaliationList] = useState([])
 
   useEffect(() => {
@@ -20,6 +23,10 @@ export default function Avaliacao() {
   async function handleDelete(id) {
     await api.delete('/delete/'+id)
     window.location.reload(); 
+  } 
+
+  function alertas() {
+    alert("HEL OWLRD")
   }
 
   return (
@@ -45,7 +52,7 @@ export default function Avaliacao() {
             return (
               <tr>
                   <td> {value.id} </td>
-                  <td> {value.question} </td>
+                  <td className="question" onClick={handleClickWhatever}> {value.question} </td>
                   <td> {value.requester} </td>
                   <td> {value.system} </td>
                   <td> {value.start_date} </td>

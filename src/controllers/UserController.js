@@ -10,7 +10,9 @@ module.exports = {
     },
 
     async store(req, res) {
-        const { name, email, password, password2 } = req.body
+        const { name, email, password, password2, level } = req.body
+        const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+        const nameRegexp = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
 
         if(!name || !email || !password || !password2) {
             return res.status(200).json({status:2, error: "Preencha todos os campos!"})
@@ -28,6 +30,14 @@ module.exports = {
             return res.status(200).json({status:2, error: "A senha tem que possuir +4 caracteres"});
           }
 
+          if(nameRegexp.test(name) === false) {
+            return res.status(200).json({status:2, error: "Nome inválido"});
+          }
+
+          if(emailRegexp.test(email) == false) {
+            return res.status(200).json({status:2, error: "Email inválido"});
+          }
+
           let user = await User.findOne({where: {email} })
           const salt = await bcrypt.genSaltSync(10)
 
@@ -36,7 +46,7 @@ module.exports = {
                   name,
                   email,
                   password: bcrypt.hashSync(password, salt),
-                  level: "Tecnico",
+                  level: 0,
                   acess: 0
               })
               return res.status(200).json({status:1, success: "Usuário cadastrado com sucesso!"})

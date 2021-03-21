@@ -6,9 +6,6 @@ module.exports = {
     async index(req, res) {
         const { avaliation_id } = req.params
     
-        console.log(avaliation_id)
-    
-    
         const url = new URL(req.url, `http://${req.headers.host}`)
     
         // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
@@ -21,7 +18,6 @@ module.exports = {
            if(system) {
              const avaliar = await Avaliation.findAll({ where: {system: system.system} })
              res.json(avaliar)
-             console.log(avaliar)
            }
     },
 
@@ -31,6 +27,10 @@ module.exports = {
 
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
         (req.connection.socket ? req.connection.socket.remoteAddress : null);
+
+        if(!note) {
+            return res.status(200).json({status:2, error: "Antes de Enviar avalie o sistema!"});
+        }
 
         const avaliation = await Avaliation.findByPk(avaliation_id)
 
