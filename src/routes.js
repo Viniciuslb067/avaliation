@@ -17,7 +17,9 @@ routes.delete('/delete/:id', AvaliationController.delete)
 routes.post('/avaliate', AvaliationController.store)
 
 routes.get('/avaliate/:avaliation_id', ResultController.index)
-routes.post('/avaliate/:avaliation_id/system/:system_id', ResultController.store)
+routes.get('/count/all/:avaliation_id', ResultController.count)
+routes.post('/avaliate/:avaliation_id', ResultController.submit)
+routes.post('/avaliate/skip/:avaliation_id', ResultController.skip)
 
 routes.get('/all', UserController.all)
 routes.get('/login/check', UserController.loginCheck)

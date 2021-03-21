@@ -10,7 +10,7 @@ import './style.css'
 
 export default function Avaliacao() {
   const history = useHistory()
-  const handleClickWhatever = () => history.push('/resultado')
+  const handleClickWhatever = () => history.push('/resultado/')
   const [avaliationList, setAvaliationList] = useState([])
 
   useEffect(() => {
@@ -25,8 +25,9 @@ export default function Avaliacao() {
     window.location.reload(); 
   } 
 
-  function alertas() {
-    alert("HEL OWLRD")
+  async function handleShow(id) {
+    handleClickWhatever(id)
+    console.log(id)
   }
 
   return (
@@ -52,7 +53,7 @@ export default function Avaliacao() {
             return (
               <tr>
                   <td> {value.id} </td>
-                  <td className="question" onClick={handleClickWhatever}> {value.question} </td>
+                  <td className="question" onClick={() => handleShow(value.id)}> {value.question} </td>
                   <td> {value.requester} </td>
                   <td> {value.system} </td>
                   <td> {value.start_date} </td>

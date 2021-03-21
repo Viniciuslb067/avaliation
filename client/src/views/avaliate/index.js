@@ -1,12 +1,12 @@
-import { FaStar } from 'react-icons/fa'
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { FaStar } from 'react-icons/fa'
 import 'antd/dist/antd.css'
 import { Modal, Button } from 'antd'
 
-import './styles.css'
-
 import api from '../../services/api'
-import { useParams } from 'react-router'
+
+import './styles.css'
 
 export default function Avaliate() {
   const [visible, setVisible] = useState(true);
@@ -14,10 +14,11 @@ export default function Avaliate() {
   const [rating, setRating] = useState(null)
   const [hover, setHover] = useState(null)
   const [coment, setComment] = useState("")
-  const [id, setId] = useState(0)
+
+  const { id } = useParams()
 
   useEffect(() => {
-    api.get('/avaliate/2')
+    api.get('/avaliate/'+id)
       .then((res) => {
         setAvaliationList(res.data)
       })
@@ -28,22 +29,25 @@ export default function Avaliate() {
       comments: coment,
       note: rating,
     }
-    console.log(id)
 
-    await api.post('/avaliate/'+id+'/system/1', data)
+    await api.post('/avaliate/'+id, data)
       .then(res => {
         if(res.data.status === 2) {
-          <div>
-            <p>{res.data.error}</p>
-          </div>
+          alert(res.data.error)
         } else {
           alert("Muito obrigado por responder a avaliação!")
-          setTimeout(() => { setVisible(false) }, 1000);
+          setTimeout(() => { setVisible(false) }, 500);
         }
     })
   }
 
-  const closeModal = () => {
+  async function handleSkip(id) {
+    const data = {
+      comments: coment,
+      note: rating,
+    }
+
+    await api.post('/avaliate/skip/'+id, data)
     setVisible(false)
   }
 
@@ -53,11 +57,15 @@ export default function Avaliate() {
     <Modal
     title={card.system}
     visible={visible}
-    onCancel={closeModal}
+    onCancel={handleSkip}
     onOk={handleSubmit}
     closable={false}
     footer={[
-      <Button>Pular</Button>,
+      <Button
+        onClick={() => handleSkip(card.id)}
+        >
+        Pular
+        </Button>,
       <Button
         type="primary"
         onClick={() => handleSubmit(card.id)}
@@ -69,7 +77,7 @@ export default function Avaliate() {
       <div className="container" key={index}>
           <div className="card-body">
           <h5 className="card-title text-center">     
-          <p className="title">{card.question}</p>
+          <p className="">{card.question}</p>
           {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1
           return (
@@ -102,7 +110,6 @@ export default function Avaliate() {
           </div>
       </div>
     </Modal>
-   
     </div>
     )
   }

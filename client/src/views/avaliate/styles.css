@@ -1,3 +1,5 @@
+
+
 input[type="radio"] {
   display: none;
 }
@@ -6,9 +8,7 @@ input[type="radio"] {
   font-size: 50px;
 }
 
-.title {
-  font-size: 35px;
-}
+
 
 .input-coment {
   margin-top: 2rem;
@@ -17,7 +17,6 @@ input[type="radio"] {
 }
 
 .input-coment::-webkit-input-placeholder{
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 20px;
 }
 .rate {

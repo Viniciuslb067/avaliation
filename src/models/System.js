@@ -11,9 +11,6 @@ class System extends Model {
       sequelize
     })
   }  
-  static associate(models) {
-    this.hasMany(models.Result, { foreignKey: 'system_id:', as: 'results' })
-  }
 }
 
 module.exports = System
