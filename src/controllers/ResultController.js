@@ -5,22 +5,25 @@ const Result = require('../models/Result')
 module.exports = {
     async index(req, res) {
         const { avaliation_id } = req.params
-    
+        
         const url = new URL(req.url, `http://${req.headers.host}`)
-    
+        
+        console.log(url)
+
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
         (req.connection.socket ? req.connection.socket.remoteAddress : null);
     
-        const user = await Result.findOne({ where: {ip_user: ip} })
+        // const user = await Result.findOne({ where: {ip_user: ip} })
 
-        Result.getTableName
-
-        console.log(ip)
+        // console.log(ip)
 
          const system = await System.findOne({ where: {system: url.hostname} })
+
+         console.log(system)
     
            if(system) {
-             const avaliar = await Avaliation.findAll({ where: {system: system.system} })
+             const avaliar = await Avaliation.findAll({ where: {id: system.id} })
+             console.log(avaliar)
              res.json(avaliar)
            }
     },

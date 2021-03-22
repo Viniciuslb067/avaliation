@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Bar } from 'react-chartjs-2'
+import { useParams } from 'react-router'
 
 import api from '../services/api'
 
@@ -9,12 +10,14 @@ const Chart = () => {
 
   const [avaliationList, setAvaliationList] = useState([])
 
+  const { id } = useParams
+
   useEffect(() => {
-    api.get('/count/all/15555')
+    api.get('/count/all/'+id)
       .then((res) => {
         setAvaliationList(res.data)
       })
-  }, [])
+  }, [id])
 
   return (
     <>

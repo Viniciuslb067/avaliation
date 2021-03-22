@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {useHistory} from 'react-router-dom'
-import { FaTimes } from 'react-icons/fa'
+import { FaTimes, FaChartLine } from 'react-icons/fa'
 
 import api from '../../services/api'
 
@@ -53,13 +53,15 @@ export default function Avaliacao() {
             return (
               <tr>
                   <td> {value.id} </td>
-                  <td className="question" onClick={() => handleShow(value.id)}> {value.question} </td>
+                  <td> {value.question} </td>
                   <td> {value.requester} </td>
                   <td> {value.system} </td>
                   <td> {value.start_date} </td>
                   <td> {value.end_date} </td>
                   <td> {value.status} </td>
-                  <td> <a href="" onClick={() => handleDelete(value.id)}><FaTimes /></a></td>
+                  <td> <a href="" onClick={() => handleDelete(value.id)}><FaTimes /></a>
+                  <a href="" onClick={() => handleShow(value.id)} style={{color: 'black', marginLeft: '3rem'}}><FaChartLine /></a>
+                  </td>
               </tr>
             )
           })}

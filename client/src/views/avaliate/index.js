@@ -18,9 +18,10 @@ export default function Avaliate() {
   const { id } = useParams()
 
   useEffect(() => {
-    api.get('/avaliate/'+id)
+    api.get('/avaliate/1')
       .then((res) => {
         setAvaliationList(res.data)
+        console.log(id)
       })
   }, [])
 
@@ -51,11 +52,14 @@ export default function Avaliate() {
     setVisible(false)
   }
 
+  function alerts() {
+    alert("ASDASDASDASD")
+  }
+
   const renderCard = (card, index) => {
     return (
     <div className={"app"}> 
     <Modal
-    title={card.system}
     visible={visible}
     onCancel={handleSkip}
     onOk={handleSubmit}
@@ -78,6 +82,7 @@ export default function Avaliate() {
           <div className="card-body">
           <h5 className="card-title text-center">     
           <p className="">{card.question}</p>
+          <p>{card.id}</p>
           {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1
           return (
@@ -92,6 +97,7 @@ export default function Avaliate() {
                   className="star" 
                   color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"} 
                   size={50}
+                  onClick={alerts}
                   onMouseEnter={() => setHover(ratingValue)}
                   onMouseLeave={() => setHover(null)}
                   />
