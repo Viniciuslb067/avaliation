@@ -85,17 +85,6 @@ export default function Edit() {
                 />
               </div>
               <div className="form-group">
-                <label>Objetivo</label>
-                <input
-                  id="objective"
-                  name="objective"
-                  className="form-control"
-                  placeholder="Objetivo"
-                  value={objective}
-                  onChange={e => setObjective(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
                 <label>Data início</label>
                 <input
                   type="date"
@@ -118,20 +107,7 @@ export default function Edit() {
                 />
               </div>
               <div className="form-group">
-                <label>Sistema</label>
-                <select 
-                id="system"
-                name="system"
-                className="form-control"
-                value={system}
-                onChange={e => setSystem(e.target.value)}
-                >
-                <option></option>
-                <option>SISREF</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Nível</label>
+                <label>Status</label>
                 <select 
                 id="level"
                 name="level"
@@ -139,8 +115,8 @@ export default function Edit() {
                 value={status}
                 onChange={e => setStatus(e.target.value)}
                 >
-                <option>Ativar</option>
-                <option>Desativar</option>
+                <option>Ativa</option>
+                <option>Inativa</option>
                 </select>
               </div>
               <button onClick={handleSubmit} className="btn btn-primary btn-block">

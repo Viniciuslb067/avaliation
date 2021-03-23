@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Bar } from 'react-chartjs-2'
+import { Bar, Doughnut } from 'react-chartjs-2'
 import { useParams } from 'react-router'
 
 import api from '../services/api'
@@ -9,14 +9,28 @@ import './styles.css'
 const Chart = () => { 
 
   const [avaliationList, setAvaliationList] = useState([])
+  const [status, setStatus ] = useState([])
 
-  const { id } = useParams
+  const { id } = useParams()
 
   useEffect(() => {
-    api.get('/count/all/'+id)
+    async function getNotes() {
+      api.get('/count/all/notes/'+id)
       .then((res) => {
         setAvaliationList(res.data)
       })
+    }
+    getNotes()
+  }, [id])
+
+  useEffect(() => {
+    async function getStatus() {
+      api.get('/count/all/status/'+id)
+        .then((res) => {
+          setStatus(res.data)
+        })
+      }
+      getStatus()
   }, [id])
 
   return (
@@ -47,35 +61,9 @@ const Chart = () => {
             animateScale: true,
             animateRotate: true,
         },
-        legend: {
-            display: true,
-            text: 'asd',
-            position: 'right',
-            labels: {
-                size: 14,
-                lineHeight: 1.6,
-                boxWidth: 20,
-                fontColor: '#181B22',
-                padding: 12,
-            }
-        },
         tooltips: {
           enabled: true,
       },
-              plugins: {
-                datalabels: {
-                    color: '#FFFFFF',
-                    textAlign: 'center',
-                    font: {
-                        size: 14,
-                        weight: 'bold',
-                        lineHeight: 1.6,
-                    },
-                    formatter: function (value, ctx) {
-                        return value;
-                    }
-                }
-            },
        maintainAspectRatio: true,
        responsive: true,
        scales: {
@@ -83,9 +71,51 @@ const Chart = () => {
            {
              ticks: {
                beginAtZero: true
-             }
-           }
-         ]
+             },
+           },
+         ],
+       },
+       legend: {
+         labels: {
+           fontSize: 15
+         }
+       }
+     }}
+    />
+    <Doughnut data={{ 
+      labels: ['Enviados', 'Pulados'],
+      datasets: [{
+        label: "Estrelas",
+        data: [status[0], status[1]],
+        backgroundColor: ["#007bff", "#ffc107", "#28a745", "#702CA1"],
+        borderWidth: 0.9,
+        borderColor: '#FFFFFF',
+      }]
+     }}
+     height={150}
+     width={500}
+     options={{
+          title: {
+            display: false,
+            text: 'Enviados/Pulados',
+            position: 'top',
+            fontSize: 50,
+            fontColor: '#000000',
+            padding: 20,
+        },
+        animation: {
+            animateScale: true,
+            animateRotate: true,
+        },
+        tooltips: {
+          enabled: true,
+      },
+       maintainAspectRatio: true,
+       responsive: true,
+       legend: {
+         labels: {
+           fontSize: 15
+         }
        }
      }}
     />

@@ -28,7 +28,7 @@ export default function Routes() {
           <PrivateRoute path='/dashboard' component={Avaliacao}/>
           <Route path='/avaliacao/inativa' component={avaliacaoInativa}/>
           <Route path='/all/users' component={Users}/>
-          <Route path='/resultado' component={Resultado}/>
+          <Route path='/resultado/:id' component={Resultado}/>
           <Route path='/' component={Index}/>
     </Switch>
     </BrowserRouter>

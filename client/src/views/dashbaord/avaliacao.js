@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import {useHistory} from 'react-router-dom'
-import { FaTimes, FaChartLine } from 'react-icons/fa'
+import { FaTimes, FaChartLine, FaEdit } from 'react-icons/fa'
 
 import api from '../../services/api'
 
 import Header from './header';
 
-import './style.css'
-
 export default function Avaliacao() {
-  const history = useHistory()
-  const handleClickWhatever = () => history.push('/resultado/')
   const [avaliationList, setAvaliationList] = useState([])
 
   useEffect(() => {
-    api.get('/avaliacao')
+    api.get('/avaliacao/ativa')
       .then((res) => {
         setAvaliationList(res.data)
       })
@@ -23,11 +18,6 @@ export default function Avaliacao() {
   async function handleDelete(id) {
     await api.delete('/delete/'+id)
     window.location.reload(); 
-  } 
-
-  async function handleShow(id) {
-    handleClickWhatever(id)
-    console.log(id)
   }
 
   return (
@@ -49,9 +39,9 @@ export default function Avaliacao() {
           </tr>
         </thead>
         <tbody>
-          {avaliationList.map((value) => {
+          {avaliationList.map((value, key) => {
             return (
-              <tr>
+              <tr key={key}>
                   <td> {value.id} </td>
                   <td> {value.question} </td>
                   <td> {value.requester} </td>
@@ -59,13 +49,28 @@ export default function Avaliacao() {
                   <td> {value.start_date} </td>
                   <td> {value.end_date} </td>
                   <td> {value.status} </td>
-                  <td> <a href="" onClick={() => handleDelete(value.id)}><FaTimes /></a>
-                  <a href="" onClick={() => handleShow(value.id)} style={{color: 'black', marginLeft: '3rem'}}><FaChartLine /></a>
+                  <td> 
+                    <a 
+                      href="" 
+                      onClick={() => handleDelete(value.id)}
+                      >
+                      <FaTimes size={20} />
+                      </a>
+                    <a 
+                      href={'/resultado/'+value.id} 
+                      style={{color: 'orange', marginLeft: '-4rem'}}>
+                      <FaChartLine size={20} />
+                      </a>
+                    <a 
+                      href={'/edit/'+value.id} 
+                      style={{color: 'green', marginLeft: '-4.5rem'}}>
+                      <FaEdit size={20} />
+                      </a>
                   </td>
-              </tr>
-            )
-          })}
-          <tr>
+                </tr>
+                )
+              })}
+            <tr>
           </tr>
         </tbody>
       </table>

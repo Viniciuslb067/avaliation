@@ -8,8 +8,6 @@ module.exports = {
         
         const url = new URL(req.url, `http://${req.headers.host}`)
         
-        console.log(url)
-
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
         (req.connection.socket ? req.connection.socket.remoteAddress : null);
     
@@ -18,12 +16,9 @@ module.exports = {
         // console.log(ip)
 
          const system = await System.findOne({ where: {system: url.hostname} })
-
-         console.log(system)
     
            if(system) {
              const avaliar = await Avaliation.findAll({ where: {id: system.id} })
-             console.log(avaliar)
              res.json(avaliar)
            }
     },
@@ -75,17 +70,47 @@ module.exports = {
     },
 
     async count(req, res) {
-        const { id } = req.params
+        const { avaliation_id } = req.params
+        
+        const a = await Avaliation.findOne({ where: {id: avaliation_id} })
 
-        console.log(id)
+        if(a) {
+            const b = await Result.findOne({ attributes: ['avaliation_id'], where: {avaliation_id: avaliation_id} })
+            if(b) {
+                const amount = [
+                    await Result.count({ attributes: ['note', 'avaliation_id'], where: { avaliation_id: avaliation_id, note: 1 } }),
+                    await Result.count({ attributes: ['note', 'avaliation_id'], where: { avaliation_id: avaliation_id, note: 2 } }),
+                    await Result.count({ attributes: ['note', 'avaliation_id'], where: { avaliation_id: avaliation_id, note: 3 } }),
+                    await Result.count({ attributes: ['note', 'avaliation_id'], where: { avaliation_id: avaliation_id, note: 4 } }),
+                    await Result.count({ attributes: ['note', 'avaliation_id'], where: { avaliation_id: avaliation_id, note: 5 } }),
+                ]
+                res.json(amount)
+            } else {
+                return res.status(200).json({error: 'Zero dados para a pesquisa'})
+            }
+        } else {
+            return res.status(200).json({error: 'Avaliação não encontrada'})
+        }
+    },
 
-        const amount = [
-            await Result.count({distinct: 'note', where: { note: 1}}),
-            await Result.count({distinct: 'note', where: { note: 2}}),
-            await Result.count({distinct: 'note', where: { note: 3}}),
-            await Result.count({distinct: 'note', where: { note: 4}}),
-            await Result.count({distinct: 'note', where: { note: 5}}),
-        ]
-        res.json(amount)
+    async countStatus(req, res) {
+        const { avaliation_id } = req.params
+
+        const a = await Avaliation.findOne({ where: {id: avaliation_id} })
+
+        if(a) {
+            const b = await Result.findOne({ attributes: ['avaliation_id'], where: {avaliation_id: avaliation_id} })
+            if(b) {
+                const asd = [
+                    await Result.count({ attributes: ['status', 'avaliation_id'], where: { avaliation_id: avaliation_id, status: "Enviado" } }),
+                    await Result.count({ attributes: ['status', 'avaliation_id'], where: { avaliation_id: avaliation_id,status: "Pulou" } }),
+                ]
+                res.json(asd)
+            } else {
+                return res.status(200).json({error: 'Zero dados para a pesquisa'})
+            }
+        } else {
+            return res.status(200).json({error: 'Avaliação não encontrada'})
+        }
     }
 }

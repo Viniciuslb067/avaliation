@@ -1,6 +1,4 @@
 const Avaliation = require('../models/Avaliation')
-const System = require('../models/System')
-const Result = require('../models/Result')
 
 module.exports = {
 
@@ -29,13 +27,13 @@ module.exports = {
 
   },
 
-  async index(req, res) {
+  async avaliacaoAtiva(req, res) {
     const Assessment = await Avaliation.findAll({ where: { status: "Ativa" } })
     res.json(Assessment)
 
   },
 
-  async inactiveAssessments(req, res) {
+  async avaliacaoInativa(req, res) {
     const inactiveAssessments = await Avaliation.findAll({ where: { status: "Inativa" } })
     res.json(inactiveAssessments)
   },
@@ -56,8 +54,6 @@ module.exports = {
     } else {
       return res.status(200).json({status:2, error: "Já existe uma avaliação com essa pergunta para o sistema: " + system});
     }
-
-
   },
 
   async delete(req, res) {

@@ -18,7 +18,7 @@ export default function Avaliate() {
   const { id } = useParams()
 
   useEffect(() => {
-    api.get('/avaliate/1')
+    api.get('/avaliate')
       .then((res) => {
         setAvaliationList(res.data)
         console.log(id)
@@ -50,10 +50,6 @@ export default function Avaliate() {
 
     await api.post('/avaliate/skip/'+id, data)
     setVisible(false)
-  }
-
-  function alerts() {
-    alert("ASDASDASDASD")
   }
 
   const renderCard = (card, index) => {
@@ -97,7 +93,6 @@ export default function Avaliate() {
                   className="star" 
                   color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"} 
                   size={50}
-                  onClick={alerts}
                   onMouseEnter={() => setHover(ratingValue)}
                   onMouseLeave={() => setHover(null)}
                   />

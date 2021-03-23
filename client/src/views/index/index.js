@@ -1,5 +1,4 @@
 import { useHistory } from 'react-router-dom';
-
 import "bootstrap/dist/css/bootstrap.min.css" ;
 import "bootswatch/dist/cosmo/bootstrap.min.css";
 import Logo from '../../images/inss-logo.jpg'

@@ -47,9 +47,9 @@ export default function Users() {
           </tr>
         </thead>
         <tbody>
-          {avaliationList.map((value) => {
+          {avaliationList.map((value, key) => {
             return (
-              <tr>
+              <tr key={key}>
                   <td> {value.id} </td>
                   <td> {value.name} </td>
                   <td> {value.email} </td>
