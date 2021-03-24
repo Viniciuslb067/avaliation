@@ -4,8 +4,6 @@ import { useParams } from 'react-router'
 
 import api from '../services/api'
 
-import './styles.css'
-
 const Chart = () => { 
 
   const [avaliationList, setAvaliationList] = useState([])

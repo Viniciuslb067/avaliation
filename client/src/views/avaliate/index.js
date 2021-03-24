@@ -54,7 +54,7 @@ export default function Avaliate() {
 
   const renderCard = (card, index) => {
     return (
-    <div className={"app"}> 
+    <div className={"app"} key={index}> 
     <Modal
     visible={visible}
     onCancel={handleSkip}

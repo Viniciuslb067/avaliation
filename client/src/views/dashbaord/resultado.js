@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 import api from '../../services/api'
 
-import Header from './header';
+import Header from '../../components/Header'
 import Chart from '../../components/Chart'
-import Cards from '../../components/Cards'
 
 import './style.css'
 

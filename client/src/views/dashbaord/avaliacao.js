@@ -3,7 +3,7 @@ import { FaTimes, FaChartLine, FaEdit } from 'react-icons/fa'
 
 import api from '../../services/api'
 
-import Header from './header';
+import Header from '../../components/Header'
 
 export default function Avaliacao() {
   const [avaliationList, setAvaliationList] = useState([])
@@ -23,9 +23,9 @@ export default function Avaliacao() {
   return (
     <>
     <Header/>
-    <div>
+    <div className=" ">
         <h1 className="title">Avaliações Ativas</h1>
-        <table className="table table-hover">
+        <table className="table table-hover" style={{width: '100%'}}>
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -73,6 +73,13 @@ export default function Avaliacao() {
             <tr>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <th>
+
+            </th>
+          </tr>
+        </tfoot>
       </table>
      </div>
      </>

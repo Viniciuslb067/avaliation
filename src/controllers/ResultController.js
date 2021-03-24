@@ -11,16 +11,18 @@ module.exports = {
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
         (req.connection.socket ? req.connection.socket.remoteAddress : null);
     
-        // const user = await Result.findOne({ where: {ip_user: ip} })
+        const user = await Result.findOne({ attributes: ['ip_user'], where: {ip_user: ip} })
 
-        // console.log(ip)
-
-         const system = await System.findOne({ where: {system: url.hostname} })
+        if(!user) {
+            const system = await System.findOne({ where: {system: url.hostname} })
     
-           if(system) {
-             const avaliar = await Avaliation.findAll({ where: {id: system.id} })
-             res.json(avaliar)
-           }
+            if(system) {
+              const avaliar = await Avaliation.findAll({ where: {id: system.id} })
+              res.json(avaliar)
+            }
+        } else {
+            return res.status(200).json({error: 'Já avaliado'})
+        }
     },
 
     async submit(req, res) {

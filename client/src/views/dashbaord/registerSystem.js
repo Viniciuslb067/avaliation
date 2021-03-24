@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import api from '../../services/api'
 
-import Header from './header';
+import Header from '../../components/Header'
 
 export default function RegisterSystem() {
   const history = useHistory()

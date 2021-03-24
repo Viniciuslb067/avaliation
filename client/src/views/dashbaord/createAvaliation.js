@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import Header from './header';
+import Header from '../../components/Header'
 
 import api from '../../services/api'
 

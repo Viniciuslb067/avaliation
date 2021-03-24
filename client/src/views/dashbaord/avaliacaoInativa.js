@@ -3,7 +3,7 @@ import { FaTimes } from 'react-icons/fa'
 
 import api from '../../services/api'
 
-import Header from './header';
+import Header from '../../components/Header'
 
 import './style.css'
 

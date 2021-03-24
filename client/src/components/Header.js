@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import './style.css'
 import { useHistory} from 'react-router-dom';
 
-import api from '../../services/api'
-import { getToken, logout } from '../../services/auth'
-import PrivateRoute from '../../services/wAuth'
+import api from '../services/api'
+import { getToken, logout } from '../services/auth'
+import PrivateRoute from '../services/wAuth'
 
 export default function Header() { 
 
