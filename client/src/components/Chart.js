@@ -346,10 +346,20 @@ const Chart = () => {
     </div>
   </div>
 
-      <Modal title="Basic Modal" visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+      <Modal 
+        title="Comentários" 
+        visible={visible} 
+        onOk={handleOk}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        >
+          {comentarios.map((value, key) => {
+            return (
+              <div key={key}>
+                <p>{value.comments}</p>
+              </div>
+            )
+          })}
+        
       </Modal>
 </>
   )
