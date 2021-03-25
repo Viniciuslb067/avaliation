@@ -7,13 +7,15 @@ module.exports = {
         const { avaliation_id } = req.params
         
         const url = new URL(req.url, `http://${req.headers.host}`)
+
+        console.log(req.headers.origin)
         
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
         (req.connection.socket ? req.connection.socket.remoteAddress : null);
     
         const user = await Result.findOne({ attributes: ['ip_user'], where: {ip_user: ip} })
 
-        if(user) {
+        if(!user) {
             const system = await System.findOne({ where: {system: url.hostname} })
     
             if(system) {
@@ -127,7 +129,7 @@ module.exports = {
     async comments(req, res) {
         const { avaliation_id } = req.params
 
-        const comentarios = await Result.findAll({ attributes: ['comments'], where: { id: avaliation_id } })
+        const comentarios = await Result.findAll({ attributes: ['comments'], where: { avaliation_id: avaliation_id } })
         
         res.json(comentarios)
         

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Bar, Doughnut } from 'react-chartjs-2'
-import { FaQuestion, FaUserTie, FaDesktop } from 'react-icons/fa'
+import { FaQuestion, FaUserTie, FaDesktop, FaStar } from 'react-icons/fa'
 import { useParams } from 'react-router'
+import { Modal, Button } from 'antd'
 
 import api from '../services/api'
 
@@ -9,8 +10,9 @@ const Chart = () => {
 
   const [avaliationList, setAvaliationList] = useState([])
   const [data, setData] = useState([])
-  const [comments, setComments] = useState([])
+  const [comentarios, setComentarios] = useState([])
   const [status, setStatus] = useState([])
+  const [visible, setVisible] = useState(false);
 
   const { id } = useParams()
 
@@ -48,14 +50,28 @@ const Chart = () => {
     async function getComments() {
       api.get('/comments/'+id)
       .then((res) => {
-        setComments(res.data)
+        setComentarios(res.data)
+        console.log(res.data)
       })
     }
     getComments()
   }, [id])
 
-  console.log(comments)
+  function show() {
+      setVisible(true)
+  }
 
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   return (
   <>
@@ -97,7 +113,139 @@ const Chart = () => {
       </div>
 
       </div>
- 
+
+      {/* Cards para os comentarios */}
+
+      <div className="row" style={{justifyContent: 'center', marginTop: '3rem'}}>
+
+          <div className="col-md-2">
+            <div class="card wow zoomIn animated" onClick={show} style={{width: '20rem', cursor: 'pointer'}}>
+                <div class="card-body">
+                  <span className="d-block">
+                  {[...Array(1)].map((star, i) => {
+                    return (
+                      <label>
+                        <input 
+                          type="radio" 
+                          name="rating" 
+                        />
+                          <FaStar 
+                            className="star" 
+                            color={"#ffc107"} 
+                            size={30}
+                            />
+                      </label> 
+                      )
+                    })}
+                  <span className="card-text m-2"> Comentários  </span>
+                  </span>
+                </div>
+              </div>
+        </div>
+
+        <div className="col-md-2">
+            <div class="card wow zoomIn animated" style={{width: '20rem', cursor: 'pointer'}}>
+                <div class="card-body">
+                  <span className="d-block">
+                  {[...Array(2)].map((star, i) => {
+                    return (
+                      <label>
+                        <input 
+                          type="radio" 
+                          name="rating" 
+                        />
+                          <FaStar 
+                            className="star" 
+                            color={"#ffc107"} 
+                            size={30}
+                            />
+                      </label> 
+                      )
+                    })}
+                  <span className="card-text m-2"> Comentários  </span>
+                  </span>
+                </div>
+              </div>
+        </div>
+
+        <div className="col-md-2">
+            <div class="card wow zoomIn animated" style={{width: '20rem', cursor: 'pointer'}}>
+                <div class="card-body">
+                  <span className="d-block">
+                  {[...Array(3)].map((star, i) => {
+                    return (
+                      <label>
+                        <input 
+                          type="radio" 
+                          name="rating" 
+                        />
+                          <FaStar 
+                            className="star" 
+                            color={"#ffc107"} 
+                            size={30}
+                            />
+                      </label> 
+                      )
+                    })}
+                  <span className="card-text m-2"> Comentários  </span>
+                  </span>
+                </div>
+              </div>
+        </div>
+
+        <div className="col-md-2">
+            <div class="card wow zoomIn animated" style={{width: '20rem', cursor: 'pointer'}}>
+                <div class="card-body">
+                  <span className="d-block">
+                  {[...Array(4)].map((star, i) => {
+                    return (
+                      <label>
+                        <input 
+                          type="radio" 
+                          name="rating" 
+                        />
+                          <FaStar 
+                            className="star" 
+                            color={"#ffc107"} 
+                            size={30}
+                            />
+                      </label> 
+                      )
+                    })}
+                  <span className="card-text m-2"> Comentários  </span>
+                  </span>
+                </div>
+              </div>
+        </div>
+
+        <div className="col-md-2">
+            <div class="card wow zoomIn animated" style={{width: '20rem', cursor: 'pointer'}}>
+                <div class="card-body">
+                  <span className="d-block">
+                  {[...Array(5)].map((star, i) => {
+                    return (
+                      <label>
+                        <input 
+                          type="radio" 
+                          name="rating" 
+                        />
+                          <FaStar 
+                            className="star" 
+                            color={"#ffc107"} 
+                            size={30}
+                            />
+                      </label> 
+                      )
+                    })}
+                  <span className="card-text m-2"> Comentários  </span>
+                  </span>
+                </div>
+              </div>
+        </div>
+
+      </div>
+     
+
     <div className="row" style={{justifyContent: 'center', marginTop: '2rem'}}>
 
     <div className="col-md-5.9">
@@ -198,10 +346,11 @@ const Chart = () => {
     </div>
   </div>
 
-  <div>
-    <h1>{comments}</h1>
-  </div>
-
+      <Modal title="Basic Modal" visible={visible} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
 </>
   )
 }
