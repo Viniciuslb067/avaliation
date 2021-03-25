@@ -16,6 +16,8 @@ routes.delete('/delete/:id', AvaliationController.delete)
 routes.post('/avaliate', AvaliationController.store)
 
 routes.get('/avaliate', ResultController.index)
+routes.get('/data/:avaliation_id', ResultController.data)
+routes.get('/comments/:avaliation_id', ResultController.comments)
 routes.get('/count/all/notes/:avaliation_id', ResultController.count)
 routes.get('/count/all/status/:avaliation_id', ResultController.countStatus)
 routes.post('/avaliate/:avaliation_id', ResultController.submit)

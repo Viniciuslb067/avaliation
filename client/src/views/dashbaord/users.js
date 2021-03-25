@@ -5,8 +5,6 @@ import api from '../../services/api'
 
 import Header from '../../components/Header'
 
-import './style.css'
-
 export default function Users() { 
   const [avaliationList, setAvaliationList] = useState([])
   const [systemList, setSystemList] = useState([])

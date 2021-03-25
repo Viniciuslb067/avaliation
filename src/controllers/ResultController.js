@@ -13,7 +13,7 @@ module.exports = {
     
         const user = await Result.findOne({ attributes: ['ip_user'], where: {ip_user: ip} })
 
-        if(!user) {
+        if(user) {
             const system = await System.findOne({ where: {system: url.hostname} })
     
             if(system) {
@@ -87,6 +87,7 @@ module.exports = {
                     await Result.count({ attributes: ['note', 'avaliation_id'], where: { avaliation_id: avaliation_id, note: 5 } }),
                 ]
                 res.json(amount)
+
             } else {
                 return res.status(200).json({error: 'Zero dados para a pesquisa'})
             }
@@ -114,5 +115,22 @@ module.exports = {
         } else {
             return res.status(200).json({error: 'Avaliação não encontrada'})
         }
+    },
+
+    async data(req, res) {
+        const { avaliation_id } = req.params
+
+        const dados = await Avaliation.findOne({ attributes: ['id', 'question', 'requester', 'system'], where: { id: avaliation_id }})
+        res.json(dados)
+    },
+
+    async comments(req, res) {
+        const { avaliation_id } = req.params
+
+        const comentarios = await Result.findAll({ attributes: ['comments'], where: { id: avaliation_id } })
+        
+        res.json(comentarios)
+        
     }
+
 }

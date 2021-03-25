@@ -21,7 +21,6 @@ export default function Avaliate() {
     api.get('/avaliate')
       .then((res) => {
         setAvaliationList(res.data)
-        console.log(id)
       })
   }, [])
 
@@ -55,7 +54,7 @@ export default function Avaliate() {
   const renderCard = (card, index) => {
     return (
     <div className={"app"} key={index}> 
-    <Modal
+    <Modal key={index}
     visible={visible}
     onCancel={handleSkip}
     onOk={handleSubmit}
@@ -78,7 +77,6 @@ export default function Avaliate() {
           <div className="card-body">
           <h5 className="card-title text-center">     
           <p className="">{card.question}</p>
-          <p>{card.id}</p>
           {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1
           return (
