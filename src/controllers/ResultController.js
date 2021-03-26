@@ -126,7 +126,7 @@ module.exports = {
     async comments(req, res) {
         const { avaliation_id } = req.params
 
-        const comentarios = await Result.findAll({ attributes: ['comments'], where: { avaliation_id: avaliation_id } })
+        const comentarios = await Result.findAll({ attributes: ['comments', 'ip_user'], where: { avaliation_id: avaliation_id } })
         
         res.json(comentarios)
         

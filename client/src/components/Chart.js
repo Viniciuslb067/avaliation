@@ -51,7 +51,6 @@ const Chart = () => {
       api.get('/comments/'+id)
       .then((res) => {
         setComentarios(res.data)
-        console.log(res.data)
       })
     }
     getComments()
@@ -250,11 +249,10 @@ const Chart = () => {
         cancelButtonProps={{ style: { display: 'none' } }}
         closable={false}
         >
-      
           {comentarios.map((value, key) => {
             return (
               <div key={key}>
-                <p>{value.comments}</p>
+                <p>O usuário: {value.ip_user},  comentou: {value.comments}</p>
               </div>
             )
           })}
