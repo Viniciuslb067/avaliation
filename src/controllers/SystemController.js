@@ -8,8 +8,10 @@ module.exports = {
         if(!system || !name || !area) {
             return res.status(200).json({status:2, error: "Preencha todos os campos!"})
           }
-        
-          let systemCheck = await System.findOne({where: {name} })
+          
+
+          const systemCheck = await System.findOne({ attributes: ['name', 'system'], where: {system, name} })
+          console.log(systemCheck)
 
           if(!systemCheck) {
             System.create({

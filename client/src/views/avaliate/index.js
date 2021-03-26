@@ -15,8 +15,6 @@ export default function Avaliate() {
   const [hover, setHover] = useState(null)
   const [coment, setComment] = useState("")
 
-  const { id } = useParams()
-
   useEffect(() => {
     api.get('/avaliate')
       .then((res) => {
@@ -32,48 +30,49 @@ export default function Avaliate() {
 
     await api.post('/avaliate/'+id, data)
       .then(res => {
-        if(res.data.status === 2) {
-          alert(res.data.error)
+        if(res.data.status === 1) {
+          alert(res.data.success)
+          setVisible(false)
         } else {
-          alert("Muito obrigado por responder a avaliação!")
-          setTimeout(() => { setVisible(false) }, 500);
+          console.log("CAIU NO ELSE")
+          alert(res.data.error)
         }
     })
   }
 
   async function handleSkip(id) {
+    setVisible(false)
     const data = {
       comments: coment,
       note: rating,
     }
 
     await api.post('/avaliate/skip/'+id, data)
-    setVisible(false)
   }
 
   const renderCard = (card, index) => {
     return (
     <div className={"app"} key={index}> 
     <Modal key={index}
-    visible={visible}
-    onCancel={handleSkip}
-    onOk={handleSubmit}
-    closable={false}
-    footer={[
-      <Button
-        onClick={() => handleSkip(card.id)}
-        >
-        Pular
-        </Button>,
-      <Button
-        type="primary"
-        onClick={() => handleSubmit(card.id)}
-        >
-        Enviar
-        </Button>
+      visible={visible}
+      onCancel={handleSkip}
+      onOk={handleSubmit}
+      closable={false}
+      footer={[
+        <Button
+          onClick={() => handleSkip(card.id)}
+          >
+          Pular
+          </Button>,
+        <Button
+          type="primary"
+          onClick={() => handleSubmit(card.id)}
+          >
+          Enviar
+          </Button>
     ]}
     >
-      <div className="container" key={index}>
+      <div className="container">
           <div className="card-body">
           <h5 className="card-title text-center">     
           <p className="">{card.question}</p>

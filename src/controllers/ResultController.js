@@ -3,27 +3,26 @@ const System = require('../models/System')
 const Result = require('../models/Result')
 
 module.exports = {
+    
     async index(req, res) {
-        const { avaliation_id } = req.params
+        const nothing = []
         
-        const url = new URL(req.url, `http://${req.headers.host}`)
+        const url = req.headers.origin || req.headers.host
 
-        console.log(req.headers.origin)
-        
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
         (req.connection.socket ? req.connection.socket.remoteAddress : null);
     
         const user = await Result.findOne({ attributes: ['ip_user'], where: {ip_user: ip} })
 
         if(!user) {
-            const system = await System.findOne({ where: {system: url.hostname} })
-    
-            if(system) {
-              const avaliar = await Avaliation.findAll({ where: {id: system.id} })
-              res.json(avaliar)
+            const avaliation = await Avaliation.findOne({ attributes:['system', 'id'], where: { system: url } })
+            if(avaliation) {
+                const avaliar = await Avaliation.findAll({ where: {id: avaliation.id} })
+                res.json(avaliar)
+            } else {
+                return res.json(nothing)
             }
         } else {
-            return res.status(200).json({error: 'Já avaliado'})
         }
     },
 
@@ -36,21 +35,19 @@ module.exports = {
 
         if(!note) {
             return res.status(200).json({status:2, error: "Antes de Enviar avalie o sistema!"});
+        } else {
+            await Result.create({
+                ip_user: ip,
+                note,
+                comments,
+                status: "Enviado",
+                avaliation_id,
+            })
+
+            return res.status(200).json({status:1, success: "Muito obrigado por responder a avaliação!"});
+
         }
 
-        const avaliation = await Avaliation.findByPk(avaliation_id)
-
-        if(!avaliation) {
-            return res.status(400).json({error: 'Avaliação não encontrada'})
-        }
-
-        await Result.create({
-            ip_user: ip,
-            note,
-            comments,
-            status: "Enviado",
-            avaliation_id,
-        })
     },
 
     async skip(req, res) {

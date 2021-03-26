@@ -117,109 +117,8 @@ const Chart = () => {
       {/* Cards para os comentarios */}
 
       <div className="row" style={{justifyContent: 'center', marginTop: '3rem'}}>
-
-          <div className="col-md-2">
-            <div class="card wow zoomIn animated" onClick={show} style={{width: '20rem', cursor: 'pointer'}}>
-                <div class="card-body">
-                  <span className="d-block">
-                  {[...Array(1)].map((star, i) => {
-                    return (
-                      <label>
-                        <input 
-                          type="radio" 
-                          name="rating" 
-                        />
-                          <FaStar 
-                            className="star" 
-                            color={"#ffc107"} 
-                            size={30}
-                            />
-                      </label> 
-                      )
-                    })}
-                  <span className="card-text m-2"> Comentários  </span>
-                  </span>
-                </div>
-              </div>
-        </div>
-
         <div className="col-md-2">
-            <div class="card wow zoomIn animated" style={{width: '20rem', cursor: 'pointer'}}>
-                <div class="card-body">
-                  <span className="d-block">
-                  {[...Array(2)].map((star, i) => {
-                    return (
-                      <label>
-                        <input 
-                          type="radio" 
-                          name="rating" 
-                        />
-                          <FaStar 
-                            className="star" 
-                            color={"#ffc107"} 
-                            size={30}
-                            />
-                      </label> 
-                      )
-                    })}
-                  <span className="card-text m-2"> Comentários  </span>
-                  </span>
-                </div>
-              </div>
-        </div>
-
-        <div className="col-md-2">
-            <div class="card wow zoomIn animated" style={{width: '20rem', cursor: 'pointer'}}>
-                <div class="card-body">
-                  <span className="d-block">
-                  {[...Array(3)].map((star, i) => {
-                    return (
-                      <label>
-                        <input 
-                          type="radio" 
-                          name="rating" 
-                        />
-                          <FaStar 
-                            className="star" 
-                            color={"#ffc107"} 
-                            size={30}
-                            />
-                      </label> 
-                      )
-                    })}
-                  <span className="card-text m-2"> Comentários  </span>
-                  </span>
-                </div>
-              </div>
-        </div>
-
-        <div className="col-md-2">
-            <div class="card wow zoomIn animated" style={{width: '20rem', cursor: 'pointer'}}>
-                <div class="card-body">
-                  <span className="d-block">
-                  {[...Array(4)].map((star, i) => {
-                    return (
-                      <label>
-                        <input 
-                          type="radio" 
-                          name="rating" 
-                        />
-                          <FaStar 
-                            className="star" 
-                            color={"#ffc107"} 
-                            size={30}
-                            />
-                      </label> 
-                      )
-                    })}
-                  <span className="card-text m-2"> Comentários  </span>
-                  </span>
-                </div>
-              </div>
-        </div>
-
-        <div className="col-md-2">
-            <div class="card wow zoomIn animated" style={{width: '20rem', cursor: 'pointer'}}>
+            <div class="card wow zoomIn animated"  onClick={show} style={{width: '20rem', cursor: 'pointer'}}>
                 <div class="card-body">
                   <span className="d-block">
                   {[...Array(5)].map((star, i) => {
@@ -241,11 +140,9 @@ const Chart = () => {
                   </span>
                 </div>
               </div>
-        </div>
-
+          </div>
       </div>
      
-
     <div className="row" style={{justifyContent: 'center', marginTop: '2rem'}}>
 
     <div className="col-md-5.9">
@@ -351,7 +248,9 @@ const Chart = () => {
         visible={visible} 
         onOk={handleOk}
         cancelButtonProps={{ style: { display: 'none' } }}
+        closable={false}
         >
+      
           {comentarios.map((value, key) => {
             return (
               <div key={key}>
