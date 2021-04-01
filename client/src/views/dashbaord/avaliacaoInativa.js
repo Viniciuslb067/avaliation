@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FaTimes } from 'react-icons/fa'
+import { FaTimes, FaChartLine, FaEdit } from 'react-icons/fa'
 
 import api from '../../services/api'
 
@@ -51,13 +51,24 @@ export default function AvaliacaoInativa() {
                   <td> {value.start_date} </td>
                   <td> {value.end_date} </td>
                   <td> {value.status} </td>
-                  <td>                     <a 
+                  <td className="align-top"> 
+                    <a 
                       href="" 
                       onClick={() => handleDelete(value.id)}
                       >
                       <FaTimes size={20} />
                       </a>
-                     </td>
+                    <a 
+                      href={'/resultado/'+value.id} 
+                      style={{color: 'orange', marginLeft: '-4rem'}}>
+                      <FaChartLine size={20} />
+                      </a>
+                    <a
+                      href={'/edit/'+value.id}
+                      style={{color: 'green', marginLeft: '-4.5rem'}}>
+                      <FaEdit size={20} />
+                      </a>
+                  </td>
               </tr>
             )
           })}

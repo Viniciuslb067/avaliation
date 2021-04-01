@@ -1,5 +1,5 @@
 const Avaliation = require('../models/Avaliation')
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 module.exports = {
 
@@ -31,25 +31,19 @@ module.exports = {
   async avaliacaoAtiva(req, res) {
     var data = new Date();
  
-    const formatter = Intl.DateTimeFormat("pt-br", {
-      dateStyle: "short"
-    })
+    const End_date = await Avaliation.findAll({ attributes: ['end_date', 'id'] })
 
-    formatter.format(data)
-
-    console.log(formatter.format(data))
-
-    const asdasd = await Avaliation.findAll({ attributes: ['end_date'] })
-    console.log(asdasd)
-
-    // attributes: ['end_date', formatter.format(end_date)],
+    End_date.forEach(a => {
+      if(data.toISOString().split("T")[0] === a.end_date) {
+        Avaliation.update({ status: "Inativa" }, { where: {id: a.id} })
+      } else {
+        Avaliation.update({ status: "Ativa" }, { where: {id: a.id} })
+      }
+    });
 
     const Assessment = await Avaliation.findAll({ 
       where: {
         status: "Ativa",
-        end_date: {
-          [Op.lt]: new Date(),
-        }
       }
     })
 
@@ -65,7 +59,7 @@ module.exports = {
   async store(req, res) {
     const { question, requester, start_date, end_date, system} = req.body
 
-    if(!question || !requester || !start_date || !end_date) {
+    if(!question || !requester || !start_date || !end_date || !system) {
       return res.status(200).json({status:2, error: "Preencha todos os campos!"})
     }
 

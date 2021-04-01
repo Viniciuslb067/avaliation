@@ -33,8 +33,8 @@ export default function Users() {
     <Header/>
     <div>
         <h1 className="title">Usuários</h1>
-        <table className="table table-hover">
-        <thead>
+        <table className="table">
+        <thead className="table-dark">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nome</th>

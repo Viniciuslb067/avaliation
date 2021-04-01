@@ -21,16 +21,10 @@ module.exports = {
        start_date: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
-          return require('moment')(this.getDataValue('start_date')).format('DD/MM/YYYY');
-        },
       },
       end_date: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
-          return require('moment')(this.getDataValue('end_date')).format('DD/MM/YYYY');
-        },
       },
       system: {
         type: Sequelize.STRING,
