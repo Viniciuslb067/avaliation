@@ -5,7 +5,11 @@ module.exports = {
   password: 'admin',
   database: 'avaliation',
   define: {
+    dialectOptions: {
+      useUTC: false, // for reading from database
+    },
     underscored: true,
     timestamps: true,
-  }
+  },
+  
 }

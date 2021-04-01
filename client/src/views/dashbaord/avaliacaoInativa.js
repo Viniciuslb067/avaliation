@@ -25,10 +25,10 @@ export default function AvaliacaoInativa() {
   return (
     <>
     <Header/>
-    <div>
+    <div className="table-responsive"> 
         <h1 className="title">Avaliações Inativas</h1>
-        <table className="table table-hover">
-        <thead>
+        <table className="table">
+        <thead className="table-dark">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Pergunta</th>
@@ -51,7 +51,13 @@ export default function AvaliacaoInativa() {
                   <td> {value.start_date} </td>
                   <td> {value.end_date} </td>
                   <td> {value.status} </td>
-                  <td> <a href=""><FaTimes /></a></td>
+                  <td>                     <a 
+                      href="" 
+                      onClick={() => handleDelete(value.id)}
+                      >
+                      <FaTimes size={20} />
+                      </a>
+                     </td>
               </tr>
             )
           })}

@@ -1,4 +1,5 @@
 const Avaliation = require('../models/Avaliation')
+const { Op } = require("sequelize");
 
 module.exports = {
 
@@ -28,7 +29,30 @@ module.exports = {
   },
 
   async avaliacaoAtiva(req, res) {
-    const Assessment = await Avaliation.findAll({ where: { status: "Ativa" } })
+    var data = new Date();
+ 
+    const formatter = Intl.DateTimeFormat("pt-br", {
+      dateStyle: "short"
+    })
+
+    formatter.format(data)
+
+    console.log(formatter.format(data))
+
+    const asdasd = await Avaliation.findAll({ attributes: ['end_date'] })
+    console.log(asdasd)
+
+    // attributes: ['end_date', formatter.format(end_date)],
+
+    const Assessment = await Avaliation.findAll({ 
+      where: {
+        status: "Ativa",
+        end_date: {
+          [Op.lt]: new Date(),
+        }
+      }
+    })
+
     res.json(Assessment)
 
   },
