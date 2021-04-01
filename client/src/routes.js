@@ -18,19 +18,19 @@ import PrivateRoute from './services/wAuth'
 export default function Routes() {
   return (
     <BrowserRouter>
-    <Switch>
-          <Route path='/login' component={Login}/>
-          <Route path='/register' component={Register}/>
-          <PrivateRoute path='/create' component={Create}/>
-          <Route path='/edit/:id' component={Edit}/>
-          <Route path='/avaliar' component={Avaliate}/>
-          <Route path='/system' component={RegisterSystem}/>
-          <PrivateRoute path='/dashboard' component={Avaliacao}/>
-          <Route path='/avaliacao/inativa' component={avaliacaoInativa}/>
-          <Route path='/all/users' component={Users}/>
-          <Route path='/resultado/:id' component={Resultado}/>
-          <Route path='/' component={Index}/>
-    </Switch>
+      <Switch>
+        <Route path='/login' component={Login} />
+        <Route path='/register' component={Register} />
+        <PrivateRoute path='/create' component={Create} />
+        <PrivateRoute path='/edit/:uuid' component={Edit} />
+        <PrivateRoute path='/avaliar' component={Avaliate} />
+        <PrivateRoute path='/system' component={RegisterSystem} />
+        <PrivateRoute path='/dashboard' component={Avaliacao} />
+        <PrivateRoute path='/avaliacao/inativa' component={avaliacaoInativa} />
+        <PrivateRoute path='/all/users' component={Users} />
+        <PrivateRoute path='/resultado/:id' component={Resultado} />
+        <Route path='/' component={Index} />
+      </Switch>
     </BrowserRouter>
   )
 }

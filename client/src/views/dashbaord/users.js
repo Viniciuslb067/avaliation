@@ -5,7 +5,7 @@ import api from '../../services/api'
 
 import Header from '../../components/Header'
 
-export default function Users() { 
+export default function Users() {
   const [avaliationList, setAvaliationList] = useState([])
   const [systemList, setSystemList] = useState([])
 
@@ -24,44 +24,44 @@ export default function Users() {
   }, [])
 
   async function handleDelete(id) {
-    await api.delete('/delete/user/'+id)
-    window.location.reload(); 
+    await api.delete('/delete/user/' + id)
+    window.location.reload();
   }
 
   return (
     <>
-    <Header/>
-    <div>
+      <Header />
+      <div>
         <h1 className="title">Usuários</h1>
         <table className="table">
-        <thead className="table-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Email</th>
-            <th scope="col">Função</th>
-            <th scope="col">Acesso</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {avaliationList.map((value, key) => {
-            return (
-              <tr key={key}>
+          <thead className="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Email</th>
+              <th scope="col">Função</th>
+              <th scope="col">Acesso</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {avaliationList.map((value, key) => {
+              return (
+                <tr key={key}>
                   <td> {value.id} </td>
                   <td> {value.name} </td>
                   <td> {value.email} </td>
                   <td> {value.level} </td>
                   <td> {value.acess} </td>
                   <td> <a href="" onClick={() => handleDelete(value.id)}><FaTimes /></a></td>
-              </tr>
-            )
-          })}
-          <tr>
-          </tr>
-        </tbody>
-      </table>
-     </div>
-     </>
+                </tr>
+              )
+            })}
+            <tr>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }

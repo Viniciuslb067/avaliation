@@ -11,8 +11,8 @@ export default function Resultado() {
 
   return (
     <>
-    <Header/>
-    <Chart/>
+      <Header />
+      <Chart />
     </>
   )
 }

@@ -7,7 +7,7 @@ import Header from '../../components/Header'
 
 import './style.css'
 
-export default function AvaliacaoInativa() { 
+export default function AvaliacaoInativa() {
   const [avaliationList, setAvaliationList] = useState([])
 
   useEffect(() => {
@@ -17,33 +17,33 @@ export default function AvaliacaoInativa() {
       })
   }, [])
 
-  async function handleDelete(id) {
-    await api.delete('/delete/'+id)
-    window.location.reload(); 
+  async function handleDelete(uuid) {
+    await api.delete('/delete/' + uuid)
+    window.location.reload();
   }
 
   return (
     <>
-    <Header/>
-    <div className="table-responsive"> 
+      <Header />
+      <div className="table-responsive">
         <h1 className="title">Avaliações Inativas</h1>
         <table className="table">
-        <thead className="table-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Pergunta</th>
-            <th scope="col">Solicitante</th>
-            <th scope="col">Sistema</th>
-            <th scope="col">Data início</th>
-            <th scope="col">Data Fim</th>
-            <th scope="col">Status</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {avaliationList.map((value) => {
-            return (
-              <tr>
+          <thead className="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Pergunta</th>
+              <th scope="col">Solicitante</th>
+              <th scope="col">Sistema</th>
+              <th scope="col">Data início</th>
+              <th scope="col">Data Fim</th>
+              <th scope="col">Status</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {avaliationList.map((value) => {
+              return (
+                <tr>
                   <td> {value.id} </td>
                   <td> {value.question} </td>
                   <td> {value.requester} </td>
@@ -51,32 +51,32 @@ export default function AvaliacaoInativa() {
                   <td> {value.start_date} </td>
                   <td> {value.end_date} </td>
                   <td> {value.status} </td>
-                  <td className="align-top"> 
-                    <a 
-                      href="" 
-                      onClick={() => handleDelete(value.id)}
-                      >
-                      <FaTimes size={20} />
-                      </a>
-                    <a 
-                      href={'/resultado/'+value.id} 
-                      style={{color: 'orange', marginLeft: '-4rem'}}>
-                      <FaChartLine size={20} />
-                      </a>
+                  <td className="align-top">
                     <a
-                      href={'/edit/'+value.id}
-                      style={{color: 'green', marginLeft: '-4.5rem'}}>
+                      href=""
+                      onClick={() => handleDelete(value.uuid)}
+                    >
+                      <FaTimes size={20} />
+                    </a>
+                    <a
+                      href={'/resultado/' + value.id}
+                      style={{ color: 'orange', marginLeft: '-4rem' }}>
+                      <FaChartLine size={20} />
+                    </a>
+                    <a
+                      href={'/edit/' + value.uuid}
+                      style={{ color: 'green', marginLeft: '-4.5rem' }}>
                       <FaEdit size={20} />
-                      </a>
+                    </a>
                   </td>
-              </tr>
-            )
-          })}
-          <tr>
-          </tr>
-        </tbody>
-      </table>
-     </div>
-     </>
+                </tr>
+              )
+            })}
+            <tr>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }

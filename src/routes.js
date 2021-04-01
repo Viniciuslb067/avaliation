@@ -7,13 +7,12 @@ const SystemController = require('./controllers/SystemController')
 
 const routes = express.Router()
 
-routes.get('/edit/:id', AvaliationController.edit)
-routes.put('/edit', AvaliationController.update)
+routes.get('/edit/:uuid', AvaliationController.edit)
 routes.get('/avaliacao/ativa', AvaliationController.avaliacaoAtiva)
 routes.get('/avaliacao/inativa', AvaliationController.avaliacaoInativa)
-// routes.get('/avaliar', AvaliationController.avaliar)
-routes.delete('/delete/:id', AvaliationController.delete)
+routes.put('/edit', AvaliationController.update)
 routes.post('/avaliate', AvaliationController.store)
+routes.delete('/delete/:uuid', AvaliationController.delete)
 
 routes.get('/avaliate', ResultController.index)
 routes.get('/data/:avaliation_id', ResultController.data)

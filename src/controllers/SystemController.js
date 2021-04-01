@@ -9,7 +9,6 @@ module.exports = {
             return res.status(200).json({status:2, error: "Preencha todos os campos!"})
           }
           
-
           const systemCheck = await System.findOne({ attributes: ['name', 'system'], where: {system, name} })
           console.log(systemCheck)
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import { FaStar } from 'react-icons/fa'
 import 'antd/dist/antd.css'
 import { Modal, Button } from 'antd'
@@ -28,16 +27,16 @@ export default function Avaliate() {
       note: rating,
     }
 
-    await api.post('/avaliate/'+id, data)
+    await api.post('/avaliate/' + id, data)
       .then(res => {
-        if(res.data.status === 1) {
+        if (res.data.status === 1) {
           alert(res.data.success)
           setVisible(false)
         } else {
           console.log("CAIU NO ELSE")
           alert(res.data.error)
         }
-    })
+      })
   }
 
   async function handleSkip(id) {
@@ -47,68 +46,68 @@ export default function Avaliate() {
       note: rating,
     }
 
-    await api.post('/avaliate/skip/'+id, data)
+    await api.post('/avaliate/skip/' + id, data)
   }
 
   const renderCard = (card, index) => {
     return (
-    <div className={"app"} key={index}> 
-    <Modal key={index}
-      visible={visible}
-      onCancel={handleSkip}
-      onOk={handleSubmit}
-      closable={false}
-      footer={[
-        <Button
-          onClick={() => handleSkip(card.id)}
-          >
-          Pular
+      <div className={"app"} key={index}>
+        <Modal key={index}
+          visible={visible}
+          onCancel={handleSkip}
+          onOk={handleSubmit}
+          closable={false}
+          footer={[
+            <Button
+              onClick={() => handleSkip(card.id)}
+            >
+              Pular
           </Button>,
-        <Button
-          type="primary"
-          onClick={() => handleSubmit(card.id)}
-          >
-          Enviar
+            <Button
+              type="primary"
+              onClick={() => handleSubmit(card.id)}
+            >
+              Enviar
           </Button>
-    ]}
-    >
-      <div className="container">
-          <div className="card-body">
-          <h5 className="card-title text-center">     
-          <p className="">{card.question}</p>
-          {[...Array(5)].map((star, i) => {
-          const ratingValue = i + 1
-          return (
-            <label>
-              <input 
-                type="radio" 
-                name="rating" 
-                value={ratingValue}
-                onClick={() => setRating(ratingValue)}
-              />
-                <FaStar 
-                  className="star" 
-                  color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"} 
-                  size={50}
-                  onMouseEnter={() => setHover(ratingValue)}
-                  onMouseLeave={() => setHover(null)}
-                  />
-            </label> 
-          )
-        })}
-        <input 
-          type="input" 
-          className="input-coment" 
-          placeholder="Comentario" 
-          onChange={(event) => {setComment(event.target.value)}}
-        />
-        <div>
-        </div>
-            </h5>
+          ]}
+        >
+          <div className="container">
+            <div className="card-body">
+              <h5 className="card-title text-center">
+                <p className="">{card.question}</p>
+                {[...Array(5)].map((star, i) => {
+                  const ratingValue = i + 1
+                  return (
+                    <label>
+                      <input
+                        type="radio"
+                        name="rating"
+                        value={ratingValue}
+                        onClick={() => setRating(ratingValue)}
+                      />
+                      <FaStar
+                        className="star"
+                        color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+                        size={50}
+                        onMouseEnter={() => setHover(ratingValue)}
+                        onMouseLeave={() => setHover(null)}
+                      />
+                    </label>
+                  )
+                })}
+                <input
+                  type="input"
+                  className="input-coment"
+                  placeholder="Comentario"
+                  onChange={(event) => { setComment(event.target.value) }}
+                />
+                <div>
+                </div>
+              </h5>
+            </div>
           </div>
+        </Modal>
       </div>
-    </Modal>
-    </div>
     )
   }
 
