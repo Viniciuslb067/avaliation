@@ -23,7 +23,7 @@ export default function Routes() {
         <Route path='/register' component={Register} />
         <PrivateRoute path='/create' component={Create} />
         <PrivateRoute path='/edit/:uuid' component={Edit} />
-        <PrivateRoute path='/avaliar' component={Avaliate} />
+        <Route path='/avaliar' component={Avaliate} />
         <PrivateRoute path='/system' component={RegisterSystem} />
         <PrivateRoute path='/dashboard' component={Avaliacao} />
         <PrivateRoute path='/avaliacao/inativa' component={avaliacaoInativa} />

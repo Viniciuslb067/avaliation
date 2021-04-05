@@ -28,7 +28,7 @@ export default function AvaliacaoInativa() {
       <div className="table-responsive">
         <h1 className="title">Avaliações Inativas</h1>
         <table className="table">
-          <thead className="table-dark">
+          <thead className="table-dark" style={{background: "#06111C"}}>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Pergunta</th>

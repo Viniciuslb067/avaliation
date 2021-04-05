@@ -25,7 +25,7 @@ export default function Header() {
 
   function dashboard() {
     return <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar navbar-dark" style={{background: "#06111C"}}>
         <a className="text-nav navbar-brand" href="" onClick={handleClickDashboard}>Painel de Controle</a>
         <div className="collapse navbar-collapse" id="navbarColor02">
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@ export default function Header() {
             </li>
           </ul>
           <div className="form-inline my-2 my-lg-0">
-            <button onClick={handleLogout} className="text-nav btn-secondary my-4 my-sm-1" type="submit">Logout</button>
+            <button onClick={handleLogout} className="btn btn-sm btn-outline-secondary my-2 my-sm-0" type="submit" style={{ padding: "9px", fontSize: "16px" }}>Logout</button>
           </div>
         </div>
       </nav>

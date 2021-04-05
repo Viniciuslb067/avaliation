@@ -120,6 +120,7 @@ module.exports = {
         const { avaliation_id } = req.params
 
         const dados = await Avaliation.findOne({ attributes: ['id', 'question', 'requester', 'system'], where: { id: avaliation_id }})
+
         res.json(dados)
     },
 
@@ -127,8 +128,22 @@ module.exports = {
         const { avaliation_id } = req.params
 
         const comentarios = await Result.findAll({ attributes: ['comments', 'ip_user'], where: { avaliation_id: avaliation_id } })
+
+        comentarios.forEach(a => {
+            if (a.comments === '') {
+                return res.json([])
+            } else {
+                return res.json(comentarios)
+            }
+          });
+
+
+        // if(comentarios.comments === '') {
+        //     return res.json()
+        // } else {
+        //     return res.json(comentarios)
+        // }
         
-        res.json(comentarios)
         
     }
 

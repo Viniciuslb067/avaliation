@@ -7,6 +7,7 @@ module.exports = {
 
     try {
       const avaliation = await Avaliation.findOne({ where: { uuid: uuid } })
+      console.log(avaliation)
       return res.json(avaliation)
     } catch (err) {
       console.log(err)
@@ -58,7 +59,27 @@ module.exports = {
           status: "Ativa",
         }
       })
-      return res.json(Assessment)
+
+      Assessment.forEach(valor => {
+        const uuid = valor.uuid
+        const question = valor.question
+        const requester = valor.requester
+        const system = valor.system
+        const start_date = valor.start_date.split('-').reverse().join('/')
+        const end_date = valor.end_date.split('-').reverse().join('/')
+        const status = valor.status
+
+        return res.json([{
+          uuid: uuid, 
+          question: question, 
+          requester: requester,
+          system: system,
+          start_date: start_date,
+          end_date: end_date,
+          status: status,
+        }])
+      })
+
     } catch (err) {
       console.log(err)
       return res.status(500).json(err)
@@ -70,7 +91,27 @@ module.exports = {
 
     try {
       const inactiveAssessments = await Avaliation.findAll({ where: { status: "Inativa" } })
-      return res.json(inactiveAssessments)
+
+      inactiveAssessments.forEach(valor => {
+        const uuid = valor.uuid
+        const question = valor.question
+        const requester = valor.requester
+        const system = valor.system
+        const start_date = valor.start_date.split('-').reverse().join('/')
+        const end_date = valor.end_date.split('-').reverse().join('/')
+        const status = valor.status
+
+        return res.json([{
+          uuid: uuid, 
+          question: question, 
+          requester: requester,
+          system: system,
+          start_date: start_date,
+          end_date: end_date,
+          status: status,
+        }])
+      })
+
     } catch (err) {
       console.log(err)
       return res.status(500).json(err)
@@ -78,22 +119,28 @@ module.exports = {
 
   },
 
-  async store(req, res) {
+  async criarAvaliacao(req, res) {
     const { question, requester, start_date, end_date, system } = req.body
 
-    if (!question || !requester || !start_date || !end_date || !system) {
-      return res.status(200).json({ status: 2, error: "Preencha todos os campos!" })
+    try {
+      if (!question || !requester || !start_date || !end_date || !system) {
+        return res.status(200).json({ status: 2, error: "Preencha todos os campos!" })
+      }
+  
+      let avaliation = await Avaliation.findOne({ where: { question, system } })
+  
+      if (!avaliation) {
+        Avaliation.create({ question, requester, start_date, end_date, system, status: "Ativa" })
+  
+        return res.status(200).json({ status: 1, success: "Avaliação criada com sucesso!" })
+      } else {
+        return res.status(200).json({ status: 2, error: "Já existe uma avaliação com essa pergunta para o sistema: " + system });
+      }
+    } catch(err) {
+      console.log(err)
+      return res.status(500).json(err)
     }
 
-    let avaliation = await Avaliation.findOne({ where: { question, system } })
-
-    if (!avaliation) {
-      Avaliation.create({ question, requester, start_date, end_date, system, status: "Ativa" })
-
-      return res.status(200).json({ status: 1, success: "Avaliação criada com sucesso!" })
-    } else {
-      return res.status(200).json({ status: 2, error: "Já existe uma avaliação com essa pergunta para o sistema: " + system });
-    }
   },
 
   async delete(req, res) {

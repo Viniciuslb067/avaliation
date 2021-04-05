@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FaTimes, FaChartLine, FaEdit } from 'react-icons/fa'
+import { format } from 'date-fns'
 
 import api from '../../services/api'
 
@@ -20,6 +21,18 @@ export default function Avaliacao() {
     window.location.reload();
   }
 
+  console.log(avaliationList)
+
+  // avaliationList.forEach(a => {
+  //   const data = a.start_date
+  //   const formattedDate = format(
+  //     data,
+  //     'MM/DD/YYYY'
+  //   )
+  //   data.form
+  //   console.log(formattedDate)
+  // })
+
   return (
     <>
       <Header />
@@ -27,7 +40,7 @@ export default function Avaliacao() {
       <div className="table-responsive">
         <h1 className="title">Avaliações Ativas</h1>
         <table className="table" style={{ width: '100%' }}>
-          <thead className="table-dark">
+          <thead className="table-dark" style={{background: "#06111C"}}>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Pergunta</th>

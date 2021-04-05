@@ -34,7 +34,7 @@ export default function Users() {
       <div>
         <h1 className="title">Usuários</h1>
         <table className="table">
-          <thead className="table-dark">
+          <thead className="table-dark" style={{background: "#06111C"}}>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nome</th>

@@ -11,7 +11,7 @@ routes.get('/edit/:uuid', AvaliationController.edit)
 routes.get('/avaliacao/ativa', AvaliationController.avaliacaoAtiva)
 routes.get('/avaliacao/inativa', AvaliationController.avaliacaoInativa)
 routes.put('/edit', AvaliationController.update)
-routes.post('/avaliate', AvaliationController.store)
+routes.post('/avaliate', AvaliationController.criarAvaliacao)
 routes.delete('/delete/:uuid', AvaliationController.delete)
 
 routes.get('/avaliate', ResultController.index)
