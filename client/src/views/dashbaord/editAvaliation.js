@@ -58,6 +58,7 @@ export default function Edit() {
           };
           notify();
           handleClickDashboard();
+          window.location.reload();
         } else {
           const notify = () => {
             toast.error("" + res.data.error);
