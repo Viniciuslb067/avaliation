@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { FaTimes, FaChartLine, FaEdit } from 'react-icons/fa'
-import { format } from 'date-fns'
 
 import api from '../../services/api'
 
@@ -20,18 +19,6 @@ export default function Avaliacao() {
     await api.delete('/delete/' + uuid)
     window.location.reload();
   }
-
-  console.log(avaliationList)
-
-  // avaliationList.forEach(a => {
-  //   const data = a.start_date
-  //   const formattedDate = format(
-  //     data,
-  //     'MM/DD/YYYY'
-  //   )
-  //   data.form
-  //   console.log(formattedDate)
-  // })
 
   return (
     <>

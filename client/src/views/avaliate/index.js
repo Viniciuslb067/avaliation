@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { FaStar } from 'react-icons/fa'
-import 'antd/dist/antd.css'
+import { toast } from 'react-toastify'
 import { Modal, Button } from 'antd'
 
 import api from '../../services/api'
 
 import './styles.css'
+import 'antd/dist/antd.css'
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 export default function Avaliate() {
   const [visible, setVisible] = useState(true);
@@ -30,11 +34,16 @@ export default function Avaliate() {
     await api.post('/avaliate/' + id, data)
       .then(res => {
         if (res.data.status === 1) {
-          alert(res.data.success)
+          const notify = () => {
+            toast.success("" + res.data.success);
+          };
+          notify();
           setVisible(false)
         } else {
-          console.log("CAIU NO ELSE")
-          alert(res.data.error)
+          const notify = () => {
+            toast.error("" + res.data.error);
+          };
+          notify();
         }
       })
   }

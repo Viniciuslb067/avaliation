@@ -7,7 +7,6 @@ import Header from '../../components/Header'
 
 export default function Users() {
   const [avaliationList, setAvaliationList] = useState([])
-  const [systemList, setSystemList] = useState([])
 
   useEffect(() => {
     api.get('/all')
@@ -16,12 +15,6 @@ export default function Users() {
       })
   }, [])
 
-  useEffect(() => {
-    api.get('/system')
-      .then((res) => {
-        setSystemList(res.data)
-      })
-  }, [])
 
   async function handleDelete(id) {
     await api.delete('/delete/user/' + id)

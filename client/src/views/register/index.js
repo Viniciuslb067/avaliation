@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
 import { useHistory } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 import api from '../../services/api'
+
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 export default function Dashboard() {
   const history = useHistory()
@@ -24,10 +28,16 @@ export default function Dashboard() {
     api.post('/register', data)
       .then(res => {
         if (res.data.status === 1) {
-          alert(res.data.success)
+          const notify = () => {
+            toast.success("" + res.data.success);
+          };
+          notify();
           handleClickLogin()
         } else {
-          alert(res.data.error)
+          const notify = () => {
+            toast.error("" + res.data.error);
+          };
+          notify();
         }
       })
       .catch(err => {

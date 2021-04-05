@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import Header from '../../components/Header'
 
 import api from '../../services/api'
+
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 export default function Create() {
   const history = useHistory()
@@ -35,10 +40,16 @@ export default function Create() {
     api.post('/avaliate', data)
       .then(res => {
         if (res.data.status === 1) {
-          alert(res.data.success)
+          const notify = () => {
+            toast.success("" + res.data.success);
+          };
+          notify();
           handleClickDashboard()
         } else {
-          alert(res.data.error)
+          const notify = () => {
+            toast.error("" + res.data.error);
+          };
+          notify();
         }
       })
       .catch(err => {

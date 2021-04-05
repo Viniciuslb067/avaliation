@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 import api from '../services/api'
 import { getToken, logout } from '../services/auth'
-import PrivateRoute from '../services/wAuth'
 
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 export default function Header() {
 
   const history = useHistory()
@@ -19,7 +22,10 @@ export default function Header() {
   async function handleLogout() {
     const res = await api.get('/logout', { headers: { token: getToken() } })
     logout()
-    alert(res.data.success)
+    const notify = () => {
+      toast.success("" + res.data.success);
+    };
+    notify();
     handleClickLogin()
   }
 

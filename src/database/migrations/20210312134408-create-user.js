@@ -28,11 +28,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      level: {
+      role: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      acess: {
+      access: {
         type: Sequelize.STRING,
         allowNull: false,
       },

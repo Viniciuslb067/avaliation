@@ -11,8 +11,8 @@ class User extends Model {
         name: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.INTEGER,
-        level: DataTypes.INTEGER,
-        acess: DataTypes.STRING,
+        role: DataTypes.INTEGER,
+        access: DataTypes.STRING,
     }, {
       sequelize
     })
