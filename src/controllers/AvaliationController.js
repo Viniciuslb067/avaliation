@@ -73,27 +73,6 @@ module.exports = {
         },
       });
 
-      var uuid;
-      var question;
-      var requester;
-      var system;
-      var start_date;
-      var end_date;
-      var status;
-      var dados
-      Assessment.forEach((valor) => {
-        dados = [{
-        id : valor.id,
-        uuid : valor.uuid,
-        question : valor.question,
-        requester : valor.requester,
-        system : valor.system,
-        start_date : valor.start_date.split("-").reverse().join("/"),
-        end_date : valor.end_date.split("-").reverse().join("/"),
-        status : valor.status,
-      }]
-      });
-
       return res.json(Assessment)
 
     } catch (err) {
@@ -108,27 +87,8 @@ module.exports = {
         where: { status: "Inativa" },
       });
 
-      inactiveAssessments.forEach((valor) => {
-        const uuid = valor.uuid;
-        const question = valor.question;
-        const requester = valor.requester;
-        const system = valor.system;
-        const start_date = valor.start_date.split("-").reverse().join("/");
-        const end_date = valor.end_date.split("-").reverse().join("/");
-        const status = valor.status;
-
-        return res.json([
-          {
-            uuid: uuid,
-            question: question,
-            requester: requester,
-            system: system,
-            start_date: start_date,
-            end_date: end_date,
-            status: status,
-          },
-        ]);
-      });
+      return res.json(inactiveAssessments)
+      
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);

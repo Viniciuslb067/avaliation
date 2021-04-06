@@ -7,47 +7,7 @@ module.exports = {
   async all(req, res) {
     const users = await User.findAll();
 
-    // users.forEach((value) => {
-    //   const roles = ["Estagiário", "Técnico"];
-
-    //   console.log(roles[0]);
-    //   const name = value.name;
-    //   const email = value.email;
-    //   const role = value.role;
-    //   const access = value.access;
-
-    //   switch (role) {
-    //     case 0:
-    //     roles = []
-    //       break;
-    //     case 1:
-    //       res.json([
-    //         {
-    //           name: name,
-    //           email: email,
-    //           level: roles[0],
-    //         },
-    //       ]);
-    //       break;
-    //     case 2:
-    //       res.json([
-    //         {
-    //           level: role,
-    //         },
-    //       ]);
-    //       break;
-
-    //       res.json([
-    //         {
-    //           name: name,
-    //           email: email,
-    //           level: role,
-    //         },
-    //       ]);
-    //     default:
-    //       break;
-    //   }
-    // });
+    res.json(users)
   },
 
   async store(req, res) {

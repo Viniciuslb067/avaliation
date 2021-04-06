@@ -46,7 +46,7 @@ export default function Avaliacao() {
                   <td> {value.id} </td>
                   <td> {value.question} </td>
                   <td> {value.requester} </td>
-                  <td> {value.system} </td>
+                  <td> {value.system.split("http://")}</td>
                   <td> {value.start_date.split("-").reverse().join("/")} </td>
                   <td> {value.end_date.split("-").reverse().join("/")} </td>
                   <td> {value.status} </td>
