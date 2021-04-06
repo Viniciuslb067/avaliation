@@ -129,22 +129,21 @@ module.exports = {
 
         const comentarios = await Result.findAll({ attributes: ['comments', 'ip_user'], where: { avaliation_id: avaliation_id } })
 
-        comentarios.forEach(a => {
-            if (a.comments === '') {
-                return res.json([])
-            } else {
-                return res.json(comentarios)
-            }
-          });
+        // comentarios.forEach(a => {
+        //     console.log(a)
+        //     if (a.comments === '') {
+        //         return res.json([])
+        //     } else {
+        //         return res.json([a])
 
-
-        // if(comentarios.comments === '') {
-        //     return res.json()
-        // } else {
-        //     return res.json(comentarios)
-        // }
-        
-        
+        //         return res.json([{
+        //             ip_user: a.ip_user.split("::ffff:"),
+        //             comments: a.comments,
+        //         }])
+                
+        //     }
+        //   });
+        res.json(comentarios)
     }
 
 }

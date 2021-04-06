@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import Header from '../../components/Header'
+import Header from "../../components/Header";
 
-import api from '../../services/api'
+import api from "../../services/api";
 
 import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
 export default function Create() {
-  const history = useHistory()
-  const handleClickDashboard = () => history.push('/dashboard')
-  const [question, setQuestion] = useState("")
-  const [requester, setRequester] = useState("")
-  const [startDate, setStartDate] = useState("")
-  const [endDate, setEndDate] = useState("")
-  const [system, setSystem] = useState("")
-  const [systemList, setSystemList] = useState([])
+  const history = useHistory();
+  const handleClickDashboard = () => history.push("/dashboard");
+  const [question, setQuestion] = useState("");
+  const [requester, setRequester] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [system, setSystem] = useState("");
+  const [systemList, setSystemList] = useState([]);
 
   useEffect(() => {
-    api.get('/system')
-      .then((res) => {
-        setSystemList(res.data)
-      })
-  }, [])
-
+    api.get("/system").then((res) => {
+      setSystemList(res.data);
+    });
+  }, []);
 
   const handleSubmit = () => {
     const data = {
@@ -34,17 +32,18 @@ export default function Create() {
       requester: requester,
       start_date: startDate,
       end_date: endDate,
-      system: system
-    }
+      system: system,
+    };
 
-    api.post('/avaliate', data)
-      .then(res => {
+    api
+      .post("/avaliate", data)
+      .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {
             toast.success("" + res.data.success);
           };
           notify();
-          handleClickDashboard()
+          handleClickDashboard();
         } else {
           const notify = () => {
             toast.error("" + res.data.error);
@@ -52,10 +51,10 @@ export default function Create() {
           notify();
         }
       })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -75,7 +74,7 @@ export default function Create() {
                 className="form-control"
                 placeholder="Pergunta"
                 value={question}
-                onChange={e => setQuestion(e.target.value)}
+                onChange={(e) => setQuestion(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -86,7 +85,7 @@ export default function Create() {
                 className="form-control"
                 placeholder="Solicitante"
                 value={requester}
-                onChange={e => setRequester(e.target.value)}
+                onChange={(e) => setRequester(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -97,7 +96,7 @@ export default function Create() {
                 name="startDate"
                 className="form-control"
                 value={startDate}
-                onChange={e => setStartDate(e.target.value)}
+                onChange={(e) => setStartDate(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -108,7 +107,7 @@ export default function Create() {
                 name="endDate"
                 className="form-control"
                 value={endDate}
-                onChange={e => setEndDate(e.target.value)}
+                onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -117,23 +116,23 @@ export default function Create() {
                 id="system"
                 name="system"
                 className="form-control"
-                onChange={e => setSystem(e.target.value)}
+                onChange={(e) => setSystem(e.target.value)}
               >
                 <option></option>
                 {systemList.map((val) => {
-                  return (
-                    <option>{val.system}</option>
-                  )
+                  return <option>{val.system}</option>;
                 })}
               </select>
             </div>
-            <button onClick={handleSubmit} className="btn btn-primary btn-block">
+            <button
+              onClick={handleSubmit}
+              className="btn btn-primary btn-block"
+            >
               Criar
             </button>
           </div>
         </div>
       </div>
     </>
-  )
-
+  );
 }

@@ -201,6 +201,7 @@ const Chart = () => {
 
         <div className="col-md-6">
           <div class="card wow zoomIn animated border bg-light" style={{ width: '55rem' }}>
+            
             <Doughnut data={{
               labels: ['Enviados', 'Pulados'],
               datasets: [{
@@ -252,7 +253,7 @@ const Chart = () => {
         {comentarios.map((value, key) => {
           return (
             <div key={key}>
-              <p>O usuário: {value.ip_user},  comentou: {value.comments}</p>
+              <p>O usuário: <b>{value.ip_user.split("::ffff:")}</b>,  comentou: <b>{value.comments}</b></p>
             </div>
           )
         })}

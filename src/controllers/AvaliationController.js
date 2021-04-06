@@ -6,7 +6,6 @@ module.exports = {
 
     try {
       const avaliation = await Avaliation.findOne({ where: { uuid: uuid } });
-      console.log(avaliation);
       return res.json(avaliation);
     } catch (err) {
       console.log(err);
@@ -95,25 +94,7 @@ module.exports = {
       }]
       });
 
-      return res.json(dados)
-
-      console.log(Assessment.length);
-      var i;
-      for (i = 0; i <= 4; i++) {
-        console.log(i)
-        return res.json([
-          {
-            id: id,
-            uuid: uuid,
-            question: question,
-            requester: requester,
-            system: system,
-            start_date: start_date,
-            end_date: end_date,
-            status: status,
-          },
-        ]);
-      }
+      return res.json(Assessment)
 
     } catch (err) {
       console.log(err);

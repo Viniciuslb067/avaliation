@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react'
-
-import api from '../../services/api'
+import React from 'react'
 
 import Header from '../../components/Header'
 import Chart from '../../components/Chart'

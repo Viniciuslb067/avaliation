@@ -47,8 +47,8 @@ export default function Avaliacao() {
                   <td> {value.question} </td>
                   <td> {value.requester} </td>
                   <td> {value.system} </td>
-                  <td> {value.start_date} </td>
-                  <td> {value.end_date} </td>
+                  <td> {value.start_date.split("-").reverse().join("/")} </td>
+                  <td> {value.end_date.split("-").reverse().join("/")} </td>
                   <td> {value.status} </td>
                   <td className="align-top">
                     <a

@@ -1,5 +1,5 @@
 const System = require('../models/System')
-const { index } = require('./ResultController')
+const Avaliation = require('../models/Avaliation') 
 
 module.exports = {
     async create(req, res) {
@@ -27,7 +27,11 @@ module.exports = {
     
     async index(req, res) {
 
-        const systemName = await System.findAll()
+        const avaliationSystemName = await Avaliation.findAll({attributes: ['system']})
+
+        console.log(avaliationSystemName.attributes)
+
+        const systemName = await System.findAll({attributes: ['name'] , where: {system: avaliationSystemName}  })
         res.json(systemName)
 
     }
