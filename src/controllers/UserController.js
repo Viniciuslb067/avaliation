@@ -101,9 +101,6 @@ module.exports = {
           status: 1,
           auth: true,
           token: token,
-          id_user: user._id,
-          user_name: user.name,
-          user_type: user.role,
         });
       })
       .catch((err) => {

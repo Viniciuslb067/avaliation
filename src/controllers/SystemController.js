@@ -31,7 +31,7 @@ module.exports = {
 
         console.log(avaliationSystemName.attributes)
 
-        const systemName = await System.findAll({attributes: ['name'] , where: {system: avaliationSystemName}  })
+        const systemName = await System.findAll()
         res.json(systemName)
 
     }

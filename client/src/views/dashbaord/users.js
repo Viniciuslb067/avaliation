@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { FaTimes } from 'react-icons/fa'
+import React, { useState, useEffect } from "react";
+import { FaTimes } from "react-icons/fa";
 
-import api from '../../services/api'
+import api from "../../services/api";
 
-import Header from '../../components/Header'
+import Header from "../../components/Header";
 
 export default function Users() {
-  const [avaliationList, setAvaliationList] = useState([])
+  const [avaliationList, setAvaliationList] = useState([]);
 
   useEffect(() => {
-    api.get('/all')
-      .then((res) => {
-        setAvaliationList(res.data)
-      })
-  }, [])
-
+    api.get("/all").then((res) => {
+      setAvaliationList(res.data);
+    });
+  }, []);
 
   async function handleDelete(id) {
-    await api.delete('/delete/user/' + id)
+    await api.delete("/delete/user/" + id);
     window.location.reload();
   }
 
@@ -27,7 +25,7 @@ export default function Users() {
       <div>
         <h1 className="title">Usuários</h1>
         <table className="table">
-          <thead className="table-dark" style={{background: "#06111C"}}>
+          <thead className="table-dark" style={{ background: "#06111C" }}>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nome</th>
@@ -46,15 +44,19 @@ export default function Users() {
                   <td> {value.email} </td>
                   <td> {value.level} </td>
                   <td> {value.acess} </td>
-                  <td> <a href="" onClick={() => handleDelete(value.id)}><FaTimes /></a></td>
+                  <td>
+                    {" "}
+                    <a href="" onClick={() => handleDelete(value.id)}>
+                      <FaTimes />
+                    </a>
+                  </td>
                 </tr>
-              )
+              );
             })}
-            <tr>
-            </tr>
+            <tr></tr>
           </tbody>
         </table>
       </div>
     </>
-  )
+  );
 }

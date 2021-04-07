@@ -1,38 +1,39 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import api from '../../services/api'
+import api from "../../services/api";
 
 import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
 export default function Dashboard() {
-  const history = useHistory()
-  const handleClickLogin = () => history.push('/login')
+  const history = useHistory();
+  const handleClickLogin = () => history.push("/login");
 
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState(0)
-  const [password2, setPassword2] = useState(0)
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState(0);
+  const [password2, setPassword2] = useState(0);
 
   const handleSubmit = () => {
     const data = {
       name: name,
       email: email,
       password: password,
-      password2: password2
-    }
+      password2: password2,
+    };
 
-    api.post('/register', data)
-      .then(res => {
+    api
+      .post("/register", data)
+      .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {
             toast.success("" + res.data.success);
           };
           notify();
-          handleClickLogin()
+          handleClickLogin();
         } else {
           const notify = () => {
             toast.error("" + res.data.error);
@@ -40,11 +41,10 @@ export default function Dashboard() {
           notify();
         }
       })
-      .catch(err => {
-        console.log(err)
-      })
-
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="App">
@@ -52,7 +52,8 @@ export default function Dashboard() {
         <div className="col-md-6 m-auto">
           <div className="card card-body">
             <h1 className="text-center mb-3">
-              <i className="fas fa-user-plus"></i> Cadastrar</h1>
+              <i className="fas fa-user-plus"></i> Cadastrar
+            </h1>
             <div className="form-group">
               <label>Name</label>
               <input
@@ -61,7 +62,7 @@ export default function Dashboard() {
                 name="name"
                 className="form-control"
                 placeholder="Nome"
-                onChange={e => setName(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -72,7 +73,7 @@ export default function Dashboard() {
                 name="email"
                 className="form-control"
                 placeholder="Email"
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -83,7 +84,7 @@ export default function Dashboard() {
                 name="password"
                 className="form-control"
                 placeholder="Senha"
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -94,17 +95,25 @@ export default function Dashboard() {
                 name="password2"
                 className="form-control"
                 placeholder="Confirma senha"
-                onChange={e => setPassword2(e.target.value)}
+                onChange={(e) => setPassword2(e.target.value)}
               />
             </div>
-            <button onClick={handleSubmit} type="submit" className="btn btn-primary btn-block">
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              className="btn btn-primary btn-block"
+            >
               Cadastrar
-              </button>
-            <p className="lead mt-4">Possui uma conta? <a href="#" onClick={handleClickLogin}>Login</a></p>
+            </button>
+            <p className="lead mt-4">
+              Possui uma conta?{" "}
+              <a href="#" onClick={handleClickLogin}>
+                Login
+              </a>
+            </p>
           </div>
         </div>
       </div>
     </div>
-  )
-
+  );
 }

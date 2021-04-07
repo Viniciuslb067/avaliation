@@ -1,83 +1,75 @@
-import React, { useState, useEffect } from 'react'
-import { FaStar } from 'react-icons/fa'
-import { toast } from 'react-toastify'
-import { Modal, Button } from 'antd'
+import React, { useState, useEffect } from "react";
+import { FaStar } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { Modal, Button } from "antd";
 
-import api from '../../services/api'
+import api from "../../services/api";
 
-import './styles.css'
-import 'antd/dist/antd.css'
+import "./styles.css";
+import "antd/dist/antd.css";
 import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
 export default function Avaliate() {
   const [visible, setVisible] = useState(true);
-  const [avaliationList, setAvaliationList] = useState([])
-  const [rating, setRating] = useState(null)
-  const [hover, setHover] = useState(null)
-  const [coment, setComment] = useState("")
+  const [avaliationList, setAvaliationList] = useState([]);
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+  const [coment, setComment] = useState("");
 
   useEffect(() => {
-    api.get('/avaliate')
-      .then((res) => {
-        setAvaliationList(res.data)
-      })
-  }, [])
+    api.get("/avaliate").then((res) => {
+      setAvaliationList(res.data);
+    });
+  }, []);
 
   async function handleSubmit(id) {
     const data = {
       comments: coment,
       note: rating,
-    }
+    };
 
-    await api.post('/avaliate/' + id, data)
-      .then(res => {
-        if (res.data.status === 1) {
-          const notify = () => {
-            toast.success("" + res.data.success);
-          };
-          notify();
-          setVisible(false)
-        } else {
-          const notify = () => {
-            toast.error("" + res.data.error);
-          };
-          notify();
-        }
-      })
+    await api.post("/avaliate/" + id, data).then((res) => {
+      if (res.data.status === 1) {
+        const notify = () => {
+          toast.success("" + res.data.success);
+        };
+        notify();
+        setVisible(false);
+      } else {
+        const notify = () => {
+          toast.error("" + res.data.error);
+        };
+        notify();
+      }
+    });
   }
 
   async function handleSkip(id) {
-    setVisible(false)
+    setVisible(false);
     const data = {
       comments: coment,
       note: rating,
-    }
+    };
 
-    await api.post('/avaliate/skip/' + id, data)
+    await api.post("/avaliate/skip/" + id, data);
   }
 
   const renderCard = (card, index) => {
     return (
       <div className={"app"} key={index}>
-        <Modal key={index}
+        <Modal
+          key={index}
           visible={visible}
           onCancel={handleSkip}
           onOk={handleSubmit}
           closable={false}
           footer={[
-            <Button
-              onClick={() => handleSkip(card.id)}
-            >
-              Pular
-          </Button>,
-            <Button
-              type="primary"
-              onClick={() => handleSubmit(card.id)}
-            >
+            <Button onClick={() => handleSkip(card.id)}>Pular</Button>,
+            <Button type="primary" onClick={() => handleSubmit(card.id)}>
               Enviar
-          </Button>
+            </Button>,
           ]}
         >
           <div className="container">
@@ -85,7 +77,7 @@ export default function Avaliate() {
               <h5 className="card-title text-center">
                 <p className="">{card.question}</p>
                 {[...Array(5)].map((star, i) => {
-                  const ratingValue = i + 1
+                  const ratingValue = i + 1;
                   return (
                     <label>
                       <input
@@ -96,34 +88,34 @@ export default function Avaliate() {
                       />
                       <FaStar
                         className="star"
-                        color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+                        color={
+                          ratingValue <= (hover || rating)
+                            ? "#ffc107"
+                            : "#e4e5e9"
+                        }
                         size={50}
                         onMouseEnter={() => setHover(ratingValue)}
                         onMouseLeave={() => setHover(null)}
                       />
                     </label>
-                  )
+                  );
                 })}
                 <input
                   type="input"
                   className="input-coment"
                   placeholder="Comentario"
-                  onChange={(event) => { setComment(event.target.value) }}
+                  onChange={(event) => {
+                    setComment(event.target.value);
+                  }}
                 />
-                <div>
-                </div>
+                <div></div>
               </h5>
             </div>
           </div>
         </Modal>
       </div>
-    )
-  }
+    );
+  };
 
-  return (
-    <div>
-      {avaliationList.map((renderCard))}
-    </div>
-  )
-
+  return <div>{avaliationList.map(renderCard)}</div>;
 }
