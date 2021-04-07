@@ -4,14 +4,65 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 module.exports = {
-  async all(req, res) {
-    const users = await User.findAll();
+  async getUserInfo(req, res) {
+    const { uuid } = req.params;
+    try {
+      const user = await User.findOne({ where: { uuid: uuid } })
+      return res.json(user);
+    } catch (err) {
+      return res
+        .status(200)
+        .json({ status: 2, error: err });
+    }
+  },
 
-    res.json(users)
+  async updateUserInfo(req, res) {
+    try {
+      const {
+        uuid,
+        name,
+        role,
+        access,
+      } = req.body;
+
+      if (!name || !role || !access) {
+        return res
+          .status(200)
+          .json({ status: 2, error: "Preencha todos os campos!" });
+      }
+
+      User.update({
+        name: name,
+        role: role,
+        access: access
+      },
+        {
+          where: { uuid: uuid }
+        }
+      )
+      return res
+        .status(200)
+        .json({ status: 1, success: "Usuário atualizado com sucesso!" });
+    } catch (err) {
+      return res
+        .status(200)
+        .json({ status: 2, error: err });
+    }
+  },
+
+  async all(req, res) {
+    try {
+      const users = await User.findAll();
+      res.json(users)
+    } catch (err) {
+      return res
+        .status(200)
+        .json({ status: 2, error: err });
+    }
   },
 
   async store(req, res) {
-    const { name, email, password, password2} = req.body;
+    const { name, email, password, password2 } = req.body;
     const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     const nameRegexp = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
 
@@ -72,11 +123,11 @@ module.exports = {
     const secret = "secret";
     const { email, password } = req.body;
 
-    if(!email || !password) {
+    if (!email || !password) {
       return res
-      .status(200)
-      .json({ status: 2, error: "Preencha todos os campos!" });
-    } 
+        .status(200)
+        .json({ status: 2, error: "Preencha todos os campos!" });
+    }
 
     User.findOne({
       where: { email },

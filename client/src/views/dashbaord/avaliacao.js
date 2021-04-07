@@ -23,6 +23,7 @@ export default function Avaliacao() {
   useEffect(() => {
     async function getInfo() {
       const res = await api.get("/edit/" + uuid);
+      console.log(uuid);
       setQuestion(res.data.question);
       setRequester(res.data.requester);
       setStartDate(res.data.start_date);
@@ -57,7 +58,6 @@ export default function Avaliacao() {
           };
           notify();
           setVisible(false);
-
         } else {
           const notify = () => {
             toast.warn("" + res.data.error);
@@ -118,7 +118,6 @@ export default function Avaliacao() {
                     <a
                       onClick={() => setVisible(true)}
                       onClickCapture={() => setUuid(value.uuid)}
-                      // href={'/edit/' + value.uuid}
                       style={{ color: "green", marginLeft: "-4.5rem" }}
                     >
                       <FaEdit size={20} />
