@@ -7,6 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 require("./controllers/authController")(app);
+require("./controllers/avaliationController")(app);
 
 app.listen(3001, () => {
   console.log("Servidor iniciado!");
