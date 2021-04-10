@@ -9,13 +9,11 @@ router.use(authMiddleware);
 
 router.get("/", async (req, res) => {
     try {
-        const avaliations = await Result.find();
+        const systems = await System.find();
 
-        return res.json({ avaliations })
-
-
+        return res.json({ systems })
     } catch (err) {
-        return res.status(400).send({ error: "Erro ao listar as avaliações" });
+        return res.status(400).send({ error: "Erro ao listar os sistemas" });
     }
 });
 
@@ -24,9 +22,9 @@ router.post("/", async (req, res) => {
 
         const { name, system, area } = req.body;
 
-        if(!system || !name || !area) {
-            return res.status(200).json({status:2, error: "Preencha todos os campos!"})
-          }
+        if (!system || !name || !area) {
+            return res.status(200).json({ status: 2, error: "Preencha todos os campos!" })
+        }
 
         if (await System.findOne({ system: system, name: name })) {
             return res.status(200).json({ status: 2, error: "Sistema já cadastrado!" });
@@ -38,16 +36,8 @@ router.post("/", async (req, res) => {
 
     } catch (err) {
         console.log(err)
-        return res.status(400).send({ error: "Erro ao avaliar" });
+        return res.status(400).send({ error: "Erro ao cadastrar sistema" });
     }
-});
-
-router.put("/:avaliationId", async (req, res) => {
-    res.json({ user: req.userId });
-});
-
-router.delete("/:avaliationId", async (req, res) => {
-    res.json({ user: req.userId });
 });
 
 module.exports = (app) => app.use("/system", router);
