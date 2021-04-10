@@ -8,6 +8,8 @@ app.use(express.json());
 
 require("./controllers/authController")(app);
 require("./controllers/avaliationController")(app);
+require("./controllers/resultController")(app);
+require("./controllers/systemController")(app);
 
 app.listen(3001, () => {
   console.log("Servidor iniciado!");
