@@ -9,17 +9,18 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
-router.post("/", async (req, res) => {
+//Listar todas as avaliações
+router.get("/", async (req, res) => {
     try {
-        const avaliation = await Avaliation.create({ ...req.body });
+        const avaliation = await Avaliation.find().where('status').all(['true'])
 
-        return res.json({ avaliation });
+        return res.json({ avaliation })
     } catch (err) {
         console.log(err)
-        return res.status(400).send({ error: "Erro ao criar uma avaliação" });
+        return res.status(400).send({ error: "Erro ao listar as avaliações" });
     }
 });
-
+//Listar uma avaliação
 router.get("/:avaliationId", async (req, res) => {
     try {
         const avaliation = await Avaliation.findById(req.params.avaliationId);
@@ -30,31 +31,35 @@ router.get("/:avaliationId", async (req, res) => {
         return res.status(400).send({ error: "Erro ao listar a avaliação" });
     }
 });
+//Criar uma avaliação
+router.post("/", async (req, res) => {
+    try {
+        const avaliation = await Avaliation.create({ ...req.body });
 
-
+        return res.json({ avaliation });
+    } catch (err) {
+        console.log(err)
+        return res.status(400).send({ error: "Erro ao criar uma avaliação" });
+    }
+});
+//Editar uma avaliação
 router.put("/:avaliationId", async (req, res) => {
     try {
-        const { avaliationId } = req.params
-        const { question, requester, start_date, end_date, status } = req.body;
+        const { question, requester, start_date, end_date } = req.body;
 
-        console.log(req.params.avaliationId)
-
-        if (!question || !requester || !start_date || !end_date || !status) {
+        if (!question || !requester || !start_date || !end_date ) {
             return res.status(200).json({ status: 2, error: "Preencha todos os campos!" });
         }
 
-        const avaliation = Avaliation.findByIdAndUpdate(req.params.avaliationId, req.body, { new: true })
+        const avaliation = await Avaliation.findByIdAndUpdate(req.params.avaliationId, req.body, { new: true })
 
-        return res.json(avaliation)
-
-        // return res.status(200).json({ status: 1, success: "Avaliação atualizada com sucesso!" });
+        return res.status(200).json({ status: 1, success: "Avaliação atualizada com sucesso!", avaliation });
 
     } catch (err) {
-        console.log(err)
         return res.status(400).send({ error: "Erro ao atualizar uma avaliação" });
     }
 });
-
+//Deletar uma avaliação
 router.delete("/:avaliationId", async (req, res) => {
     try {
         await Avaliation.findByIdAndRemove(req.params.avaliationId);

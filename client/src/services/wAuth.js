@@ -9,7 +9,7 @@ export default function WAtuh ({ component: Component, ...rest  }){
 
     useEffect(() => {
         async function verify(){
-            var res = await api.get('/login/check/', {params:{token: getToken()}})
+            var res = await api.get('/auth/authenticate', {params:{token: getToken()}})
 
             if(res.data.status === 200) {
                 setLoading(false)

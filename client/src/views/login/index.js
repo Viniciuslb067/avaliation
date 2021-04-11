@@ -7,8 +7,18 @@ import api from "../../services/api";
 import { login } from "../../services/auth";
 
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 toast.configure();
+
+const acessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzBjNWYyNDk3YTczMzE1MGM5MjM5ZCIsImlhdCI6MTYxODAxMDg0MywiZXhwIjoxNjE4MDk3MjQzfQ.PxGnx0uZb7hiD7eIckfrv32G7n6jw8qYNnM2oJ5hMCM'
+
+const authAxios = axios.create({
+  baseURL: 'http://localhost:3001',
+  headers: {
+    Authorization: `Bearer ${acessToken}`, 
+  }
+ })
 
 export default function Login() {
   const history = useHistory();
@@ -17,7 +27,7 @@ export default function Login() {
   const handleClickRegister = () => history.push("/register");
 
   async function handleSubmit() {
-    await api.post("/login", { email, password }).then((res) => {
+    await authAxios.post("/auth/authenticate", { email, password }).then((res) => {
       if (res.data.status === 1) {
         login(res.data.token);
         window.location.href = "/dashboard";
