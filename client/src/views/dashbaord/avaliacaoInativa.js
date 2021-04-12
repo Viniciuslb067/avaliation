@@ -30,7 +30,7 @@ export default function AvaliacaoInativa() {
 
   useEffect(() => {
     async function getInfo() {
-      const res = await api.get("/edit/" + uuid);
+      const res = await api.get("/avaliation/" + uuid);
       setQuestion(res.data.question);
       setRequester(res.data.requester);
       setStartDate(res.data.start_date);
@@ -102,23 +102,23 @@ export default function AvaliacaoInativa() {
                   <td> {value.id} </td>
                   <td> {value.question} </td>
                   <td> {value.requester} </td>
-                  <td> {value.system.split("http://")} </td>
-                  <td> {value.start_date.split("-").reverse().join("/")} </td>
-                  <td> {value.end_date.split("-").reverse().join("/")} </td>
+                  <td> {value.system} </td>
+                  <td> {value.start_date} </td>
+                  <td> {value.end_date} </td>
                   <td> {value.status} </td>
                   <td className="align-top">
                     <a href="" onClick={() => handleDelete(value.uuid)}>
                       <FaTimes size={20} />
                     </a>
                     <a
-                      href={"/resultado/" + value.id}
+                      href={"/resultado/" + value._id}
                       style={{ color: "orange", marginLeft: "-4rem" }}
                     >
                       <FaChartLine size={20} />
                     </a>
                     <a
                       onClick={() => setVisible(true)}
-                      onClickCapture={() => setUuid(value.uuid)}
+                      onClickCapture={() => setUuid(value._id)}
                       style={{ color: "green", marginLeft: "-4.5rem" }}
                     >
                       <FaEdit size={20} />

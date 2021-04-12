@@ -17,8 +17,8 @@ const Chart = () => {
 
   useEffect(() => {
     async function getNotes() {
-      api.get("/count/all/notes/" + id).then((res) => {
-        setAvaliationList(res.data);
+      api.get("/avaliate/result/" + id).then((res) => {
+        setAvaliationList(res.data.notes);
       });
     }
     getNotes();
@@ -26,8 +26,8 @@ const Chart = () => {
 
   useEffect(() => {
     async function getStatus() {
-      api.get("/count/all/status/" + id).then((res) => {
-        setStatus(res.data);
+      api.get("/avaliate/result/" + id).then((res) => {
+        setStatus(res.data.status);
       });
     }
     getStatus();
@@ -35,8 +35,8 @@ const Chart = () => {
 
   useEffect(() => {
     async function getData() {
-      api.get("/data/" + id).then((res) => {
-        setData(res.data);
+      api.get("/avaliate/result/" + id).then((res) => {
+        setData(res.data.data);
       });
     }
     getData();
@@ -44,8 +44,9 @@ const Chart = () => {
 
   useEffect(() => {
     async function getComments() {
-      api.get("/comments/" + id).then((res) => {
-        setComentarios(res.data);
+      api.get("/avaliate/result/" + id).then((res) => {
+        console.log(res.data)
+        setComentarios(res.data.comments);
       });
     }
     getComments();
@@ -162,11 +163,11 @@ const Chart = () => {
                         avaliationList[4],
                       ],
                       backgroundColor: [
-                        "#007bff",
+                        "#E21E39",
                         "#ffc107",
                         "#28a745",
                         "#702CA1",
-                        "#E21E39",
+                        "#007bff",
                       ],
                       borderWidth: 0.9,
                       borderColor: "#FFFFFF",
