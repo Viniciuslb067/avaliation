@@ -45,20 +45,11 @@ const Chart = () => {
   useEffect(() => {
     async function getComments() {
       api.get("/avaliate/result/" + id).then((res) => {
-        console.log(res.data)
         setComentarios(res.data.comments);
       });
     }
     getComments();
   }, [id]);
-
-  function show() {
-    setVisible(true);
-  }
-
-  const handleOk = () => {
-    setVisible(false);
-  };
 
   return (
     <>
@@ -71,33 +62,33 @@ const Chart = () => {
 
       <div className="row" style={{ justifyContent: "center" }}>
         <div className="col-md-2">
-          <div class="card wow zoomIn animated" style={{ width: "20rem" }}>
-            <div class="card-body">
+          <div className="card wow zoomIn animated" style={{ width: "20rem" }}>
+            <div className="card-body">
               <span className="d-block">
                 <FaQuestion size={30} />
-                <span class="card-text m-2"> {data.question}</span>
+                <span className="card-text m-2"> {data.question}</span>
               </span>
             </div>
           </div>
         </div>
 
         <div className="col-md-2">
-          <div class="card wow zoomIn animated" style={{ width: "20rem" }}>
-            <div class="card-body">
+          <div className="card wow zoomIn animated" style={{ width: "20rem" }}>
+            <div className="card-body">
               <span className="d-block">
                 <FaUserTie size={30} />
-                <span class="card-text m-2"> {data.requester}</span>
+                <span className="card-text m-2"> {data.requester}</span>
               </span>
             </div>
           </div>
         </div>
 
         <div className="col-md-2">
-          <div class="card wow zoomIn animated" style={{ width: "20rem" }}>
-            <div class="card-body">
+          <div className="card wow zoomIn animated" style={{ width: "20rem" }}>
+            <div className="card-body">
               <span className="d-block">
                 <FaDesktop size={30} />
-                <span class="card-text m-2"> {data.system}</span>
+                <span className="card-text m-2"> {data.system}</span>
               </span>
             </div>
           </div>
@@ -112,11 +103,11 @@ const Chart = () => {
       >
         <div className="col-md-2">
           <div
-            class="card wow zoomIn animated"
-            onClick={show}
+            className="card wow zoomIn animated"
+            onClick={() => {setVisible(true)}}
             style={{ width: "20rem", cursor: "pointer" }}
           >
-            <div class="card-body">
+            <div className="card-body">
               <span className="d-block">
                 {[...Array(5)].map((star, i) => {
                   return (
@@ -139,10 +130,10 @@ const Chart = () => {
       >
         <div className="col-md-5.9">
           <div
-            class="card wow zoomIn animated border bg-light"
+            className="card wow zoomIn animated border bg-light"
             style={{ width: "55rem" }}
           >
-            <div class="card-body">
+            <div className="card-body">
               <Bar
                 data={{
                   labels: [
@@ -216,7 +207,7 @@ const Chart = () => {
 
         <div className="col-md-6">
           <div
-            class="card wow zoomIn animated border bg-light"
+            className="card wow zoomIn animated border bg-light"
             style={{ width: "55rem" }}
           >
             <Doughnut
@@ -271,9 +262,8 @@ const Chart = () => {
       <Modal
         title="Comentários"
         visible={visible}
-        onOk={handleOk}
-        cancelButtonProps={{ style: { display: "none" } }}
-        closable={false}
+        onCancel={() => setVisible(false)}
+        footer={null}
       >
         {comentarios.map((value, key) => {
           return (

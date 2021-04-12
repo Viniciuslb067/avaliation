@@ -20,7 +20,7 @@ export default function Avaliate() {
 
   useEffect(() => {
     api.get("/avaliate").then((res) => {
-      console.log(res.data)
+      console.log(res.data);
       setAvaliationList(res.data);
     });
   }, []);
@@ -68,7 +68,7 @@ export default function Avaliate() {
           closable={false}
           footer={[
             <Button onClick={() => handleSkip(card.id)}>Pular</Button>,
-            <Button type="primary" onClick={() => handleSubmit(card.id)}>
+            <Button type="primary" onClick={() => handleSubmit(card._id)}>
               Enviar
             </Button>,
           ]}

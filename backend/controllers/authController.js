@@ -48,8 +48,6 @@ router.post("/register", async (req, res) => {
   try {
     const { name, email, password, password2 } = req.body;
 
-    console.log(req.body)
-
     if (!name || !email || !password || !password2) {
       return res.status(200).json({ status: 2, error: "Preencha todos os campos" });
     }

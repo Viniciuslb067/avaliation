@@ -15,24 +15,19 @@ router.get("/", async (req, res) => {
 
         const user = await Result.findOne({ ip_user: ip })
 
-        console.log(url)
-
-        if (!user) {
-
-            console.log(avaliation)
-            if (avaliation) {
-            }
+        if (!user || user === null) {
+            const avaliation = await Avaliation.findOne({ system: url }, ['_id'])
+                if (avaliation) {
+                    const avaliate = await Avaliation.find({ _id: avaliation._id }, ['question'])
+                        return res.json(avaliate)
+                } else {
+                    return res.json([])
+                }
+            } else {
+                return res.json([])
         }
 
-        const avaliation = await Avaliation.findOne({ system: url })
-
-        const avaliations = await Result.find();
-
-        return res.json(avaliation)
-
-
     } catch (err) {
-        console.log(err)
         return res.status(400).send({ error: "Erro ao listar as avaliações" });
     }
 });
@@ -59,13 +54,12 @@ router.get("/result/:avaliationId", async (req, res) => {
 
                 const data = await Avaliation.findOne({ _id: req.params.avaliationId }).exec();
 
-                const comments = await Result.find({ _id: req.params.avaliationId}).exec();
+                const comments = await Result.find({ avaliation: req.params.avaliationId }, ['comments', 'ip_user'])
 
                 res.json({ notes, status, data, comments })
             }
         }
     } catch (err) {
-        console.log(err)
         return res.status(400).send({ error: "Erro ao listar os resultados" });
     }
 
@@ -75,8 +69,6 @@ router.get("/result/:avaliationId", async (req, res) => {
 router.post("/:avaliationId", async (req, res) => {
     try {
         const { avaliationId } = req.params
-
-        console.log(avaliationId)
 
         const { note, comments } = req.body
 
