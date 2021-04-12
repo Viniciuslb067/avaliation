@@ -103,7 +103,7 @@ export default function Avaliacao() {
                   <td> {value.requester} </td>
                   <td> {value.system.split("http://")}</td>
                   <td> {value.start_date} </td>
-                  <td> {value.end_date.split('T00:00:00.000Z')} </td>
+                  <td> {value.end_date} </td>
                   <td> {value.status} </td>
                   <td className="align-top">
                     <a href="" onClick={() => handleDelete(value.uuid)}>
