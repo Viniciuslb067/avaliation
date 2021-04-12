@@ -20,6 +20,7 @@ export default function Avaliate() {
 
   useEffect(() => {
     api.get("/avaliate").then((res) => {
+      console.log(res.data)
       setAvaliationList(res.data);
     });
   }, []);

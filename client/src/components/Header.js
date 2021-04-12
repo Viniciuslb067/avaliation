@@ -18,7 +18,7 @@ export default function Header() {
   const handleClickDashboard = () => history.push("/dashboard");
 
   async function handleLogout() {
-    const res = await api.get("/logout", { headers: { token: getToken() } });
+    const res = await api.get("/auth/logout", { headers: { token: getToken() } });
     logout();
     const notify = () => {
       toast.success("" + res.data.success);

@@ -5,13 +5,11 @@ const System = require("../models/System");
 
 const router = express.Router();
 
-router.use(authMiddleware);
-
 router.get("/", async (req, res) => {
     try {
         const systems = await System.find();
 
-        return res.json({ systems })
+        return res.json( systems )
     } catch (err) {
         return res.status(400).send({ error: "Erro ao listar os sistemas" });
     }
@@ -28,11 +26,11 @@ router.post("/", async (req, res) => {
 
         if (await System.findOne({ system: system, name: name })) {
             return res.status(200).json({ status: 2, error: "Sistema já cadastrado!" });
+        } else {
+            await System.create(req.body);
+
+            return res.status(200).json({ status: 1, success: "Sistema cadastrado com sucesso!" })
         }
-
-        const systemCreate = await System.create(req.body);
-
-        return res.json({ systemCreate });
 
     } catch (err) {
         console.log(err)

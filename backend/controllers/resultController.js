@@ -7,16 +7,32 @@ const System = require("../models/System");
 
 const router = express.Router();
 
-router.use(authMiddleware);
-
 router.get("/", async (req, res) => {
     try {
+        const url = req.headers.origin || req.headers.host
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||
+        (req.connection.socket ? req.connection.socket.remoteAddress : null);
+
+        const user = await Result.findOne({ ip_user: ip })
+
+        console.log(url)
+
+        if(!user) {
+            
+            console.log(avaliation)
+            if(avaliation) {
+            }
+        }
+
+        const avaliation = await Avaliation.findOne({ system: url })
+
         const avaliations = await Result.find();
 
-        return res.json({ avaliations })
+        return res.json( avaliation )
 
 
     } catch (err) {
+        console.log(err)
         return res.status(400).send({ error: "Erro ao listar as avaliações" });
     }
 });

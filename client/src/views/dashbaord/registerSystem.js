@@ -26,7 +26,7 @@ export default function RegisterSystem() {
     };
 
     api
-      .post("/register/system", data)
+      .post("/system", data)
       .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {

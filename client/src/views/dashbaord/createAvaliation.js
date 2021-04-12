@@ -36,7 +36,7 @@ export default function Create() {
     };
 
     api
-      .post("/avaliate", data)
+      .post("/avaliation", data)
       .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {
@@ -119,8 +119,8 @@ export default function Create() {
                 onChange={(e) => setSystem(e.target.value)}
               >
                 <option></option>
-                {systemList.map((val) => {
-                  return <option>{val.system}</option>;
+                {systemList.map((val, key) => {
+                  return <option key={key}>{val.system}</option>;
                 })}
               </select>
             </div>

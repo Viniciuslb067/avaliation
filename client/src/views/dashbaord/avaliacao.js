@@ -15,15 +15,14 @@ export default function Avaliacao() {
   const [visible, setVisible] = useState(false);
   const [uuid, setUuid] = useState("");
   const [question, setQuestion] = useState("");
-  const [requester, setRequester] = useState("");
+  const [requester, setRequester] = useState(""); 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
     async function getInfo() {
-      const res = await api.get("/edit/" + uuid);
-      console.log(uuid);
+      const res = await api.get("/avaliation/" + uuid);
       setQuestion(res.data.question);
       setRequester(res.data.requester);
       setStartDate(res.data.start_date);
@@ -33,9 +32,10 @@ export default function Avaliacao() {
     getInfo();
   }, [uuid]);
 
+
   useEffect(() => {
     api.get("/avaliation").then((res) => {
-      setAvaliationList(res.data);
+      setAvaliationList(res.data.avaliationOn);
     });
   }, []);
 
@@ -50,7 +50,7 @@ export default function Avaliacao() {
     };
 
     await api
-      .put("/edit", data)
+      .put("/avaliation/" + uuid, data)
       .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {
@@ -98,26 +98,26 @@ export default function Avaliacao() {
             {avaliationList.map((value, key) => {
               return (
                 <tr key={key}>
-                  <td> {value.id} </td>
+                  <td> </td>
                   <td> {value.question} </td>
                   <td> {value.requester} </td>
                   <td> {value.system.split("http://")}</td>
-                  <td> {value.start_date.split("-").reverse().join("/")} </td>
-                  <td> {value.end_date.split("-").reverse().join("/")} </td>
+                  <td> {value.start_date} </td>
+                  <td> {value.end_date.split('T00:00:00.000Z')} </td>
                   <td> {value.status} </td>
                   <td className="align-top">
                     <a href="" onClick={() => handleDelete(value.uuid)}>
                       <FaTimes size={20} />
                     </a>
                     <a
-                      href={"/resultado/" + value.id}
+                      href={"/resultado/" + value._id}
                       style={{ color: "orange", marginLeft: "-4rem" }}
                     >
                       <FaChartLine size={20} />
                     </a>
                     <a
                       onClick={() => setVisible(true)}
-                      onClickCapture={() => setUuid(value.uuid)}
+                      onClickCapture={() => setUuid(value._id)}
                       style={{ color: "green", marginLeft: "-4.5rem" }}
                     >
                       <FaEdit size={20} />

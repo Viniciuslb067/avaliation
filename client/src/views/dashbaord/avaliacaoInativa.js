@@ -23,8 +23,8 @@ export default function AvaliacaoInativa() {
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
-    api.get("/avaliacao/inativa").then((res) => {
-      setAvaliationList(res.data);
+    api.get("/avaliation").then((res) => {
+      setAvaliationList(res.data.avaliationOff);
     });
   }, []);
 

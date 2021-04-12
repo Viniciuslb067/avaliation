@@ -29,6 +29,18 @@ router.get("/check", async (req, res) => {
       }
     })
   }
+});
+
+router.get("/logout", async (req, res) => {
+  const token = req.headers.token;
+
+  if (token) {
+    res.cookie("token", null, { httpOnly: true });
+  } else {
+    res.status(401).send("Erro ao sair");
+  }
+
+  return res.status(200).json({ status: 1, success: "Sessão finalizada com sucesso" });
 
 });
 
