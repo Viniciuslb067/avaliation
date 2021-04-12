@@ -34,7 +34,7 @@ export default function Avaliacao() {
   }, [uuid]);
 
   useEffect(() => {
-    api.get("/avaliacao/ativa").then((res) => {
+    api.get("/avaliation").then((res) => {
       setAvaliationList(res.data);
     });
   }, []);

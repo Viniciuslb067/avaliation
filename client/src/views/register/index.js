@@ -26,7 +26,7 @@ export default function Dashboard() {
     };
 
     api
-      .post("/register", data)
+      .post("/auth/register", data)
       .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {

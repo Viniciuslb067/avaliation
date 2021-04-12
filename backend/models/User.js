@@ -20,10 +20,12 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
+    default: "Técnico",
   },
   access: {
-    type: String,
+    type: Boolean,
     required: true,
+    default: true,
   },
   createdAt: {
     type: Date,
