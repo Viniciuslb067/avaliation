@@ -1,16 +1,30 @@
 const express = require("express");
+const datefns = require("date-fns")
 
 const Avaliation = require("../models/Avaliation");
-const Result = require("../models/Result");
-const System = require("../models/System");
 
 const router = express.Router();
 
 //Listar todas as avaliações ativas
 router.get("/", async (req, res) => {
     try {
-        const avaliationOn = await Avaliation.find().where('status').all(['true'])
-        const avaliationOff = await Avaliation.find().where('status').all(['false'])
+        const avaliationOn = await Avaliation.find().where('status').all(['Ativada'])
+        const avaliationOff = await Avaliation.find().where('status').all(['Desativada'])
+
+        await Promise.all(avaliationOn.map(async (status) => {
+            const data = status.end_date;
+            const parsedDate = datefns.parseISO(data);
+            const past = datefns.isAfter(parsedDate, new Date());
+            const future = datefns.isBefore(parsedDate, new Date());
+            console.log(future, status._id)
+
+            if (past === false) {
+                await Avaliation.updateMany({ _id: status._id }, { $set: { status: 'Desativada' } })
+            }
+            if (future === false) {
+                await Avaliation.updateMany({ _id: status._id }, { $set: { status: 'Ativada' } })
+            }
+        }))
 
         return res.json({ avaliationOn, avaliationOff })
     } catch (err) {

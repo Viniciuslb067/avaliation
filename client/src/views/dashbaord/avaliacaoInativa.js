@@ -51,7 +51,7 @@ export default function AvaliacaoInativa() {
     };
 
     await api
-      .put("/edit", data)
+      .put("/avaliation/" + uuid, data)
       .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {
@@ -103,8 +103,8 @@ export default function AvaliacaoInativa() {
                   <td> {value.question} </td>
                   <td> {value.requester} </td>
                   <td> {value.system} </td>
-                  <td> {value.start_date} </td>
-                  <td> {value.end_date} </td>
+                  <td> {value.start_date.split('-').reverse().join("/")} </td>
+                  <td> {value.end_date.split('-').reverse().join("/")} </td>
                   <td> {value.status} </td>
                   <td className="align-top">
                     <a href="" onClick={() => handleDelete(value.uuid)}>
@@ -193,8 +193,8 @@ export default function AvaliacaoInativa() {
               value={status}
               onChange={(e) => setStatus(e.target.value)}
             >
-              <option>Ativa</option>
-              <option>Inativa</option>
+              <option>Ativada</option>
+              <option>Desativada</option>
             </select>
           </div>
           <button onClick={handleSubmit} className="btn btn-primary btn-block">

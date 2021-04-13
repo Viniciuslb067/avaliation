@@ -1,5 +1,4 @@
 const mongoose = require("../database");
-const DateOnly = require("mongoose-dateonly")(mongoose)
 
 const AvaliationSchema = new mongoose.Schema({
     question: {
@@ -12,11 +11,11 @@ const AvaliationSchema = new mongoose.Schema({
         uppercase: true,
     },
     start_date: {
-        type: DateOnly,
+        type: String,
         required: true,
     },
     end_date: {
-        type: Date,
+        type: String,
         required: true,
     },
     system: {
@@ -24,9 +23,9 @@ const AvaliationSchema = new mongoose.Schema({
         required: true,
     },
     status: {
-        type: Boolean,
+        type: String,
         required: true,
-        default: true,
+        default: "Ativada",
     },
     createdAt: {
         type: Date,
