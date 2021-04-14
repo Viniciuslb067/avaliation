@@ -16,8 +16,7 @@ router.get("/", async (req, res) => {
             const parsedDate = datefns.parseISO(data);
             const past = datefns.isAfter(parsedDate, new Date());
             const future = datefns.isBefore(parsedDate, new Date());
-            console.log(future, status._id)
-
+    
             if (past === false) {
                 await Avaliation.updateMany({ _id: status._id }, { $set: { status: 'Desativada' } })
             }

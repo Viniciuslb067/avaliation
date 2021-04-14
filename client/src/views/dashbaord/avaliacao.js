@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaTimes, FaChartLine, FaEdit } from "react-icons/fa";
 import { Modal } from "antd";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 import api from "../../services/api";
 
@@ -15,7 +15,7 @@ export default function Avaliacao() {
   const [visible, setVisible] = useState(false);
   const [uuid, setUuid] = useState("");
   const [question, setQuestion] = useState("");
-  const [requester, setRequester] = useState(""); 
+  const [requester, setRequester] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [status, setStatus] = useState(0);
@@ -31,7 +31,6 @@ export default function Avaliacao() {
     }
     getInfo();
   }, [uuid]);
-
 
   useEffect(() => {
     api.get("/avaliation").then((res) => {
@@ -58,6 +57,7 @@ export default function Avaliacao() {
           };
           notify();
           setVisible(false);
+          setTimeout(window.location.reload(), 5000) 
         } else {
           const notify = () => {
             toast.warn("" + res.data.error);
@@ -78,6 +78,18 @@ export default function Avaliacao() {
   return (
     <>
       <Header />
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
       <div className="table-responsive">
         <h1 className="title">Avaliações Ativas</h1>
@@ -102,8 +114,8 @@ export default function Avaliacao() {
                   <td> {value.question} </td>
                   <td> {value.requester} </td>
                   <td> {value.system.split("http://")}</td>
-                  <td> {value.start_date.split('-').reverse().join("/")} </td>
-                  <td> {value.end_date.split('-').reverse().join("/")} </td>
+                  <td> {value.start_date.split("-").reverse().join("/")} </td>
+                  <td> {value.end_date.split("-").reverse().join("/")} </td>
                   <td> {value.status} </td>
                   <td className="align-top">
                     <a href="" onClick={() => handleDelete(value.uuid)}>
