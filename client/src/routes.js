@@ -23,7 +23,7 @@ export default function Routes() {
         <PrivateRoute path="/create" component={Create} />
         <Route path="/avaliar" component={Avaliate} />
         <PrivateRoute path="/system" component={RegisterSystem} />
-        <Route path="/dashboard" component={Avaliacao} />
+        <PrivateRoute path="/dashboard" component={Avaliacao} />
         <PrivateRoute path="/avaliacao/inativa" component={avaliacaoInativa} />
         <PrivateRoute path="/all/users" component={Users} />
         <PrivateRoute path="/resultado/:id" component={Resultado} />
