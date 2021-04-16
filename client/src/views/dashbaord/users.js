@@ -64,7 +64,7 @@ export default function Users() {
   }
 
   async function handleDelete(id) {
-    await api.delete("/delete/user/" + id);
+    await api.delete("/user/" + id);
     window.location.reload();
   }
 
@@ -94,7 +94,7 @@ export default function Users() {
                   <td>
                     <a
                       href=""
-                      onClick={() => handleDelete(value.id)}
+                      onClick={() => handleDelete(value._id)}
                       style={{ color: "orange", marginLeft: "-4rem" }}
                     >
                       <FaTimes size={20} />

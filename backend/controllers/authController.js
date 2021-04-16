@@ -94,7 +94,9 @@ router.post("/register", async (req, res) => {
 router.post("/authenticate", async (req, res) => {
   const { email, password } = req.body;
 
-  // if(await User.findOne({ status }))
+  if(await User.findOne({ email: email, access: "Pendente" })) {
+    return res.status(200).json({ status: 2, error: "O seu login está pendente, aguardando aprovação" });
+  }
 
   const user = await User.findOne({ email }).select("+password");
 

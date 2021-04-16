@@ -5,7 +5,7 @@ const Avaliation = require("../models/Avaliation");
 
 const router = express.Router();
 
-//Listar todas as avaliações ativas
+//Listar todas as avaliações
 router.get("/", async (req, res) => {
     try {
         const avaliationOn = await Avaliation.find().where('status').all(['Ativada'])
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
             const parsedDate = datefns.parseISO(data);
             const past = datefns.isAfter(parsedDate, new Date());
             const future = datefns.isBefore(parsedDate, new Date());
-    
+
             if (past === false) {
                 await Avaliation.updateMany({ _id: status._id }, { $set: { status: 'Desativada' } })
             }
@@ -81,7 +81,7 @@ router.delete("/:avaliationId", async (req, res) => {
     try {
         await Avaliation.findByIdAndRemove(req.params.avaliationId);
 
-        return res.json();
+        return res.status(200).json({ status: 1, success: "Avaliação excluida com sucesso", user });
     } catch (err) {
         return res.status(400).send({ error: "Erro ao deletar uma avaliação" });
     }

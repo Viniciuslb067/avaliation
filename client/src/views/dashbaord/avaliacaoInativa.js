@@ -72,8 +72,8 @@ export default function AvaliacaoInativa() {
       });
   }
 
-  async function handleDelete(uuid) {
-    await api.delete("/delete/" + uuid);
+  async function handleDelete(id) {
+    await api.delete("/avaliation/" + id);
     window.location.reload();
   }
 
@@ -107,7 +107,7 @@ export default function AvaliacaoInativa() {
                   <td> {value.end_date.split('-').reverse().join("/")} </td>
                   <td> {value.status} </td>
                   <td className="align-top">
-                    <a href="" onClick={() => handleDelete(value.uuid)}>
+                    <a href="" onClick={() => handleDelete(value._id)}>
                       <FaTimes size={20} />
                     </a>
                     <a
