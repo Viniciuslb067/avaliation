@@ -23,9 +23,9 @@ const UserSchema = new mongoose.Schema({
     default: "Técnico",
   },
   access: {
-    type: Boolean,
+    type: String,
     required: true,
-    default: true,
+    default: "Pendente",
   },
   createdAt: {
     type: Date,

@@ -17,11 +17,10 @@ export default function Users() {
   const [name, setName] = useState("");
   const [role, setRole] = useState(0);
   const [access, setAccess] = useState("");
-  
+
   useEffect(() => {
     async function getInfo() {
-      const res = await api.get("/editar/" + uuid);
-      console.log(res.data);
+      const res = await api.get("/user/" + uuid);
       setName(res.data.name);
       setRole(res.data.role);
       setAccess(res.data.access);
@@ -29,9 +28,8 @@ export default function Users() {
     getInfo();
   }, [uuid]);
 
-  
   useEffect(() => {
-    api.get("/all").then((res) => {
+    api.get("/user").then((res) => {
       setAvaliationList(res.data);
     });
   }, []);
@@ -45,7 +43,7 @@ export default function Users() {
     };
 
     await api
-      .put("/update/user", data)
+      .put("/user/" + uuid, data)
       .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {
@@ -78,7 +76,6 @@ export default function Users() {
         <table className="table">
           <thead className="table-dark" style={{ background: "#06111C" }}>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">Nome</th>
               <th scope="col">Email</th>
               <th scope="col">Função</th>
@@ -90,7 +87,6 @@ export default function Users() {
             {avaliationList.map((value, key) => {
               return (
                 <tr key={key}>
-                  <td> {value.id} </td>
                   <td> {value.name} </td>
                   <td> {value.email} </td>
                   <td> {value.role} </td>
@@ -101,14 +97,14 @@ export default function Users() {
                       onClick={() => handleDelete(value.id)}
                       style={{ color: "orange", marginLeft: "-4rem" }}
                     >
-                      <FaTimes />
+                      <FaTimes size={20} />
                     </a>
                     <a
                       onClick={() => setVisible(true)}
-                      onClickCapture={() => setUuid(value.uuid)}
+                      onClickCapture={() => setUuid(value._id)}
                       style={{ color: "green", marginLeft: "-4.5rem" }}
                     >
-                      <FaEdit />
+                      <FaEdit size={20} />
                     </a>
                   </td>
                 </tr>
@@ -149,14 +145,14 @@ export default function Users() {
           </div>
           <div className="form-group">
             <label>Acesso</label>
-            <input
-              id="access"
-              name="access"
+            <select
               className="form-control"
-              placeholder="Acesso"
               value={access}
               onChange={(e) => setAccess(e.target.value)}
-            />
+            >
+              <option>Liberado</option>
+              <option>Pendente</option>
+            </select>
           </div>
           <button onClick={handleSubmit} className="btn btn-primary btn-block">
             Editar

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 mongoose
   .connect(
-    "mongodb://localhost/",
+    "mongodb+srv://lb:hS2C34FrwD6wi5Or@database.0uo3i.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     {
       dbName: "database",
       useNewUrlParser: true,

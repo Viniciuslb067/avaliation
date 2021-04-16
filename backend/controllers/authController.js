@@ -94,21 +94,7 @@ router.post("/register", async (req, res) => {
 router.post("/authenticate", async (req, res) => {
   const { email, password } = req.body;
 
-  function authenticateDN(username, password) {
-    var client = ldap.createClient({ url: "ldap://cnsldapdf.prevnet", bindCredentials: "dc=gov,dc=br"});
-
-    console.log(client.connected)
-
-    client.bind(username, password, function (err) {
-      if (err) {
-        console.log("Error on connection: " + err);
-      } else {
-        console.log("Success");
-      }
-    });
-  }
-
-  authenticateDN("cn=raquel.reclizek","Exitmusic2308.");
+  // if(await User.findOne({ status }))
 
   const user = await User.findOne({ email }).select("+password");
 

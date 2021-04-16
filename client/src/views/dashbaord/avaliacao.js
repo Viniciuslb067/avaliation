@@ -57,7 +57,7 @@ export default function Avaliacao() {
           };
           notify();
           setVisible(false);
-          setTimeout(window.location.reload(), 5000) 
+          setTimeout(window.location.reload(), 5000);
         } else {
           const notify = () => {
             toast.warn("" + res.data.error);
