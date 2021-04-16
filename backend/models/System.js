@@ -1,7 +1,7 @@
 const mongoose = require("../database");
 
 const SystemSchema = new mongoose.Schema({
-    system: {
+    dns: {
         type: String,
         required: true,
     },

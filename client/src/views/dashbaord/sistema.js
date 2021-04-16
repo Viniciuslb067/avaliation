@@ -11,45 +11,39 @@ import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 export default function Sistema() {
-  const [avaliationList, setAvaliationList] = useState([]);
+  const [systemList, setSystemList] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [uuid, setUuid] = useState("");
-  const [question, setQuestion] = useState("");
-  const [requester, setRequester] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [status, setStatus] = useState(0);
+  const [name, setName] = useState("");
+  const [dns, setDns] = useState("");
+  const [area, setArea] = useState("");
+  const [id, setId] = useState("");
 
   useEffect(() => {
     async function getInfo() {
-      const res = await api.get("/avaliation/" + uuid);
-      setQuestion(res.data.question);
-      setRequester(res.data.requester);
-      setStartDate(res.data.start_date);
-      setEndDate(res.data.end_date);
-      setStatus(res.data.status);
+      const res = await api.get("/system/" + id);
+      console.log(res.data);
+      setName(res.data.name);
+      setDns(res.data.dns);
+      setArea(res.data.area);
     }
     getInfo();
-  }, [uuid]);
+  }, [id]);
 
   useEffect(() => {
-    api.get("/avaliation").then((res) => {
-      setAvaliationList(res.data.avaliationOn);
+    api.get("/system").then((res) => {
+      setSystemList(res.data);
     });
   }, []);
 
   async function handleSubmit() {
     const data = {
-      question: question,
-      requester: requester,
-      start_date: startDate,
-      end_date: endDate,
-      status: status,
-      uuid: uuid,
+      name: name,
+      dns: dns,
+      area: area,
     };
 
     await api
-      .put("/avaliation/" + uuid, data)
+      .put("/system/" + id, data)
       .then((res) => {
         if (res.data.status === 1) {
           const notify = () => {
@@ -71,7 +65,7 @@ export default function Sistema() {
   }
 
   async function handleDelete(id) {
-    await api.delete("/avaliation/" + id);
+    await api.delete("/system/" + id);
     window.location.reload();
   }
 
@@ -89,46 +83,34 @@ export default function Sistema() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />    
+      />
       <div className="table-responsive">
         <h1 className="title">Sistemas Ativos</h1>
         <table className="table" style={{ width: "100%" }}>
           <thead className="table-dark" style={{ background: "#06111C" }}>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Pergunta</th>
-              <th scope="col">Solicitante</th>
-              <th scope="col">Sistema</th>
-              <th scope="col">Data início</th>
-              <th scope="col">Data Fim</th>
-              <th scope="col">Status</th>
+              <th scope="col"></th>
+              <th scope="col">Nome</th>
+              <th scope="col">DNS</th>
+              <th scope="col">Área</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            {avaliationList.map((value, key) => {
+            {systemList.map((value, key) => {
               return (
                 <tr key={key}>
                   <td> </td>
-                  <td> {value.question} </td>
-                  <td> {value.requester} </td>
-                  <td> {value.system.split("http://")}</td>
-                  <td> {value.start_date.split("-").reverse().join("/")} </td>
-                  <td> {value.end_date.split("-").reverse().join("/")} </td>
-                  <td> {value.status} </td>
+                  <td> {value.name} </td>
+                  <td> {value.dns} </td>
+                  <td> {value.area}</td>
                   <td className="align-top">
                     <a href="" onClick={() => handleDelete(value._id)}>
                       <FaTimes size={20} />
                     </a>
                     <a
-                      href={"/resultado/" + value._id}
-                      style={{ color: "orange", marginLeft: "-4rem" }}
-                    >
-                      <FaChartLine size={20} />
-                    </a>
-                    <a
                       onClick={() => setVisible(true)}
-                      onClickCapture={() => setUuid(value._id)}
+                      onClickCapture={() => setId(value._id)}
                       style={{ color: "green", marginLeft: "-4.5rem" }}
                     >
                       <FaEdit size={20} />
@@ -155,61 +137,40 @@ export default function Sistema() {
             <i className="fas fa-user-plus"></i> Editar Avaliação
           </h1>
           <div className="form-group">
-            <label>Pergunta</label>
+            <label>Nome</label>
             <input
               type="name"
-              id="question"
-              name="question"
               className="form-control"
-              placeholder="Pergunta"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
+              placeholder="Nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="form-group">
-            <label>Solicitante</label>
+            <label>DNS</label>
             <input
-              id="requester"
-              name="requester"
               className="form-control"
-              placeholder="Solicitante"
-              value={requester}
-              onChange={(e) => setRequester(e.target.value)}
+              placeholder="DNS"
+              value={dns}
+              onChange={(e) => setDns(e.target.value)}
             />
           </div>
           <div className="form-group">
-            <label>Data início</label>
-            <input
-              type="date"
-              id="startDate"
-              name="startDate"
-              className="form-control"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label>Data fim</label>
-            <input
-              type="date"
-              id="endDate"
-              name="endDate"
-              className="form-control"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label>Status</label>
+            <label>Area</label>
             <select
-              id="level"
-              name="level"
               className="form-control"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              value={area}
+              onChange={(e) => setArea(e.target.value)}
             >
-              <option>Ativada</option>
-              <option>Desativada</option>
+              <option></option>
+              <option>DIRETORIA DE ATENDIMENTO</option>
+              <option>DIRETORIA DE BENEFÍCIOS</option>
+              <option>DIRETORIA DE GESTÃO DE PESSOAS</option>
+              <option>DIRETORIA DE GESTÃO DE PESSOAS E ADMINISTRAÇÃO</option>
+              <option>DIRETORIA DE TECNOLOGIA DA INFORMAÇÃO E INOVAÇÃO</option>
+              <option>AUDITORIA-GERAL</option>
+              <option>CORREGEDORIA-GERAL</option>
+              <option>PRESIDÊNCIA</option>
             </select>
           </div>
           <button onClick={handleSubmit} className="btn btn-primary btn-block">

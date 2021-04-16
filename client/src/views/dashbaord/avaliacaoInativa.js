@@ -81,7 +81,7 @@ export default function AvaliacaoInativa() {
     <>
       <Header />
       <div className="table-responsive">
-        <h1 className="title">Avaliações Inativas</h1>
+        <h1 className="title">Avaliações Desativadas</h1>
         <table className="table">
           <thead className="table-dark" style={{ background: "#06111C" }}>
             <tr>

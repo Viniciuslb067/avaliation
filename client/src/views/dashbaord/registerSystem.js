@@ -14,13 +14,13 @@ export default function RegisterSystem() {
   const history = useHistory();
   const handleClickDashboard = () => history.push("/dashboard");
 
-  const [system, setSystem] = useState("");
+  const [dns, setDns] = useState("");
   const [name, setName] = useState("");
   const [area, setArea] = useState("");
 
   const handleSubmit = () => {
     const data = {
-      system: system,
+      dns: dns,
       name: name,
       area: area,
     };
@@ -57,8 +57,6 @@ export default function RegisterSystem() {
               <label>Nome</label>
               <input
                 type="name"
-                id="question"
-                name="question"
                 className="form-control"
                 placeholder="Exemplo: Humanograma"
                 onChange={(e) => setName(e.target.value)}
@@ -67,18 +65,14 @@ export default function RegisterSystem() {
             <div className="form-group">
               <label>DNS</label>
               <input
-                id="requester"
-                name="requester"
                 className="form-control"
                 placeholder="Exemplo: humanograma-dev.prevnet"
-                onChange={(e) => setSystem(e.target.value)}
+                onChange={(e) => setDns(e.target.value)}
               />
             </div>
             <div className="form-group">
               <label>Area</label>
               <select
-                id="system"
-                name="system"
                 className="form-control"
                 onChange={(e) => setArea(e.target.value)}
               >
@@ -87,9 +81,7 @@ export default function RegisterSystem() {
                 <option>DIRETORIA DE BENEFÍCIOS</option>
                 <option>DIRETORIA DE GESTÃO DE PESSOAS</option>
                 <option>DIRETORIA DE GESTÃO DE PESSOAS E ADMINISTRAÇÃO</option>
-                <option>
-                  DIRETORIA DE TECNOLOGIA DA INFORMAÇÃO E INOVAÇÃO
-                </option>
+                <option>DIRETORIA DE TECNOLOGIA DA INFORMAÇÃO E INOVAÇÃO</option>
                 <option>AUDITORIA-GERAL</option>
                 <option>CORREGEDORIA-GERAL</option>
                 <option>PRESIDÊNCIA</option>

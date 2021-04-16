@@ -5,13 +5,14 @@ import Index from "./views/index/index";
 import Login from "./views/login/index";
 import Register from "./views/register/index";
 import Create from "./views/dashbaord/createAvaliation";
+import Sistema from "./views/dashbaord/sistema";
 import Avaliacao from "./views/dashbaord/avaliacao";
 import avaliacaoInativa from "./views/dashbaord/avaliacaoInativa";
 import Avaliate from "./views/avaliate/index";
 import RegisterSystem from "./views/dashbaord/registerSystem";
 import Users from "./views/dashbaord/users";
 import Resultado from "./views/dashbaord/resultado";
-import Sistema from "./views/dashbaord/sistema";
+
 
 import PrivateRoute from "./services/wAuth";
 
@@ -23,11 +24,11 @@ export default function Routes() {
         <Route path="/register" component={Register} />
         <PrivateRoute path="/create" component={Create} />
         <Route path="/avaliar" component={Avaliate} />
+        <PrivateRoute path="/dashboard/sistema" component={Sistema} />
         <PrivateRoute path="/system" component={RegisterSystem} />
         <PrivateRoute path="/dashboard" component={Avaliacao} />
         <PrivateRoute path="/avaliacao/inativa" component={avaliacaoInativa} />
         <PrivateRoute path="/all/users" component={Users} />
-        <PrivateRoute path="/dashboard/sistema" component={Sistema} />
         <PrivateRoute path="/resultado/:id" component={Resultado} />
         <Route path="/" component={Index} />
       </Switch>

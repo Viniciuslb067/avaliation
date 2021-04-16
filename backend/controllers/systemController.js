@@ -26,13 +26,13 @@ router.get("/:systemId", async (req, res) => {
 //Cadastrar um sistema
 router.post("/", async (req, res) => {
     try {
-        const { name, system, area } = req.body;
+        const { name, dns, area } = req.body;
 
-        if (!system || !name || !area) {
+        if (!dns || !name || !area) {
             return res.status(200).json({ status: 2, error: "Preencha todos os campos!" })
         }
 
-        if (await System.findOne({ system: system, name: name })) {
+        if (await System.findOne({ dns: dns, name: name })) {
             return res.status(200).json({ status: 2, error: "Sistema já cadastrado!" });
         } else {
             await System.create(req.body);
@@ -48,9 +48,9 @@ router.post("/", async (req, res) => {
 //Editar um sistema
 router.put("/:systemId", async (req, res) => {
     try {
-        const { system, name, area } = req.body;
+        const { dns, name, area } = req.body;
 
-        if (!system || !name || !area) {
+        if (!dns || !name || !area) {
             return res.status(200).send({ error: "Preencha todos os campos" });
         }
 
