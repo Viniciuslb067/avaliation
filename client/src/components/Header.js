@@ -16,6 +16,7 @@ export default function Header() {
   const handleClickCriar = () => history.push("/create");
   const handleClickCadastrar = () => history.push("/system");
   const handleClickDashboard = () => history.push("/dashboard");
+  const handleClickSistema = () => history.push("/dashboard/sistema");
 
   async function handleLogout() {
     const res = await api.get("/auth/logout", { headers: { token: getToken() } });
@@ -70,6 +71,15 @@ export default function Header() {
                   onClick={handleClickExibirUsuarios}
                 >
                   Exibir usuários
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="text-nav nav-link"
+                  href=""
+                  onClick={handleClickSistema}
+                >
+                  Exibir sistemas
                 </a>
               </li>
               <li className="nav-item">
